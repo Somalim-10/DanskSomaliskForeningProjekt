@@ -1,0 +1,6 @@
+@SomaliskDanskRest_HostAddress = http://localhost:5063
+
+GET {{SomaliskDanskRest_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
