@@ -14,19 +14,19 @@ namespace SomaliskDanskForening_Test
         public void TestInitialize()
         {
             _date = new DateTime(2026, 1, 2);
-            _evt = new Event(7, "Test Title", _date, 90, "Some description", 14);
+            _evt = new Event(7, "Test Title", _date, 3, "Some description", 14);
         }
 
         [TestMethod]
         public void Constructor_SetsProperties()
         {
-            // Use event created in TestInitialize
-            Assert.AreEqual(7, _evt.Id);
-            Assert.AreEqual("Test Title", _evt.Title);
-            Assert.AreEqual(_date.Date, _evt.Date);
-            Assert.AreEqual(90, _evt.Duration);
-            Assert.AreEqual("Some description", _evt.Description);
-            Assert.AreEqual(14, _evt.StartTime);
+
+            var evtLocal = new Event(1, "Title", _date, 1, "Description", 10);
+            Assert.AreEqual(1, evtLocal.Id);
+            Assert.AreEqual("Title", evtLocal.Title);
+            Assert.AreEqual(_date.Date, evtLocal.Date);
+            Assert.AreEqual(1, evtLocal.Duration);
+            Assert.AreEqual("Description", evtLocal.Description);
         }
 
         [TestMethod]
@@ -34,7 +34,7 @@ namespace SomaliskDanskForening_Test
         {
             Assert.ThrowsException<ArgumentNullException>(() =>
             {
-                _ = new Event(1, null!, DateTime.Today, 60, "desc", 10);
+                _ = new Event(1, null!, DateTime.Today, 1, "desc", 10);
             });
         }
 
@@ -44,7 +44,7 @@ namespace SomaliskDanskForening_Test
             var longTitle = new string('A', 201);
             Assert.ThrowsException<ArgumentException>(() =>
             {
-                _ = new Event(1, longTitle, DateTime.Today, 60, "desc", 10);
+                _ = new Event(1, longTitle, DateTime.Today, 1, "desc", 10);
             });
         }
 
@@ -55,7 +55,7 @@ namespace SomaliskDanskForening_Test
             Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
             {
                 var e = new Event();
-                e.StartTime = 1;
+                e.StartTime = -1; // fixed: use -1 for out-of-range low value
             });
 
             // Too high
@@ -81,8 +81,8 @@ namespace SomaliskDanskForening_Test
         [DataTestMethod]
         [DataRow(0)]
         [DataRow(1)]
-        [DataRow(60)]
-        [DataRow(1440)]
+        [DataRow(24)]
+        [DataRow(168)]
         public void Duration_Valid_SetsValue(int duration)
         {
             var e = new Event();
@@ -95,19 +95,19 @@ namespace SomaliskDanskForening_Test
         {
             Assert.ThrowsException<ArgumentNullException>(() =>
             {
-                _ = new Event(1, "Title", DateTime.Today, 60, null!, 9);
+                _ = new Event(1, "Title", DateTime.Today, 1, null!, 9);
             });
         }
 
-        [TestMethod]
-        public void ToString_IncludesKeyValues()
+        [TestMethod()]
+        public void ToStringTest()
         {
-            var evt = new Event(2, "Party", new DateTime(2026, 5, 5), 120, "Fun", 18);
-            var str = evt.ToString();
-
-            Assert.IsTrue(str.Contains("Party"));
-            Assert.IsTrue(str.Contains("120"));
-            Assert.IsTrue(str.Contains("2026-05-05") || str.Contains("05/05/2026") || str.Contains("5/5/2026"));
+            Assert.AreEqual(
+                "Test Title (2026-01-02 14:00, 3h)",
+                _evt.ToString()
+            );
         }
+
+
     }
 }

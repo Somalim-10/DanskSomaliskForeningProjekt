@@ -7,7 +7,7 @@ namespace SomaliskDanskForening_Lib.Models
         private string _title;
         private DateTime _date;
         private int _startTime;
-        private int _duration; 
+        private int _duration;
         private string _description;
 
         public int Id { get; set; }
@@ -38,13 +38,10 @@ namespace SomaliskDanskForening_Lib.Models
             get => _startTime;
             set
             {
-                if (value==null)
-                {
-                    throw new ArgumentNullException("StartTime cannot be null");
-                }   
+                // StartTime expressed as hour of day (0-23)
                 if (value < 0 || value > 23)
                 {
-                    throw new ArgumentOutOfRangeException("StartTime must be between 0 and 23: " );
+                    throw new ArgumentOutOfRangeException("StartTime must be between 0 and 23: " + value);
                 }
                 _startTime = value;
             }
@@ -56,8 +53,8 @@ namespace SomaliskDanskForening_Lib.Models
             set => _date = value.Date;
         }
 
-   
-        // Duration expressed in minutes
+
+        // Duration expressed in hours
         public int Duration
         {
             get => _duration;
@@ -65,10 +62,10 @@ namespace SomaliskDanskForening_Lib.Models
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException("Duration must be non-negative: " + value);
+                    throw new ArgumentOutOfRangeException("Duration (hours) must be non-negative: " + value);
                 }
                 _duration = value;
-                
+
             }
 
         }
@@ -80,7 +77,7 @@ namespace SomaliskDanskForening_Lib.Models
             {
                 if (value == null)
                 {
-                     throw new ArgumentNullException("Description cannot be null");
+                    throw new ArgumentNullException("Description cannot be null");
                 }
                 if (value.Length > 2000)
                 {
@@ -90,7 +87,7 @@ namespace SomaliskDanskForening_Lib.Models
             }
         }
 
-   
+
 
         public Event(int id, string title, DateTime date, int durationHours, string description, int startTime)
         {
@@ -99,15 +96,20 @@ namespace SomaliskDanskForening_Lib.Models
             Date = date;
             Duration = durationHours;
             Description = description;
+            StartTime = startTime;
         }
 
-        public Event() : this(0, "Untitled Event", DateTime.Today, 60, "No description", 0)
+        public Event() : this(0, "Default Title", DateTime.Today, 1, "Default Description", 12)
         {
         }
 
         public override string ToString()
         {
-            return $"Event(Id={Id}, Title='{Title}', Date={Date.ToShortDateString()}, Duration={Duration} minutes, Description='{Description}')";
+            return $"{Title} ({Date:yyyy-MM-dd} {StartTime:00}:00, {Duration}h)";
         }
+
+
+
+
     }
 }
