@@ -35,7 +35,7 @@ namespace SomaliskDanskForening_API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost] 
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<Event> Post([FromBody] EventsDTO events)
