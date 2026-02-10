@@ -74,7 +74,7 @@ namespace SomaliskDanskForening_Test.Repo
             var evt = _repo.GetById(1);
             Assert.IsNotNull(evt);
             evt.Title = "Updated Title";
-            var updated = _repo.Update(evt);
+            var updated = _repo.Update(evt.Id,evt);
             Assert.IsNotNull(updated);
             Assert.AreEqual("Updated Title", updated.Title);
         }

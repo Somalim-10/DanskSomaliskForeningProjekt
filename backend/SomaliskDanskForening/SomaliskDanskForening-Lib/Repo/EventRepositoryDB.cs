@@ -33,10 +33,11 @@ namespace SomaliskDanskForening_Lib.Repo
         {
             return _events.ToList();
         }
-        public Event? Update(Event evt)
+        public Event? Update(int id, Event evt)
         {
             var existing = GetById(evt.Id);
             if (existing == null) return null;
+            evt.Id = id;
             existing.Title = evt.Title;
             existing.Date = evt.Date;
             existing.StartTime = evt.StartTime;

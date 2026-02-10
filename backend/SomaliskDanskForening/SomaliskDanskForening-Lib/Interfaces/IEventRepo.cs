@@ -9,7 +9,7 @@ namespace SomaliskDanskForening_Lib.Interfaces
         Event? GetById(int id);
        
         List<Event> GetAll();
-        Event? Update(Event evt);
+        Event? Update(int id,Event evt);
         Event? Delete(int id);
     }
 }
