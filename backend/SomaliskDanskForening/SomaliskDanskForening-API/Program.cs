@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using SomaliskDanskForening_Lib;
 using SomaliskDanskForening_Lib.Data;
 using SomaliskDanskForening_Lib.Interfaces;
@@ -17,7 +18,9 @@ builder.Services.AddControllers();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Register DbContext (uses OnConfiguring with connection string in ForeningDbContext)
-builder.Services.AddDbContext<ForeningDbContext>();
+builder.Services.AddDbContext<ForeningDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
 
 // Register repositories
 builder.Services.AddScoped<IEventRepo, EventRepositoryDB>();
@@ -38,18 +41,17 @@ builder.Services.AddCors(options =>
 });
 var app = builder.Build();
 
-// Ensure database is created for development convenience
-using (var scope = app.Services.CreateScope())
-{
-    var ctx = scope.ServiceProvider.GetRequiredService<ForeningDbContext>();
-    ctx.Database.EnsureCreated();
-}
+
+
 
 // Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();
-app.UseSwagger();
-app.UseSwaggerUI();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 app.UseCors();
 
 app.UseAuthorization();
