@@ -2,6 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SomaliskDanskForening_Lib.Repo;
 using SomaliskDanskForening_Lib.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace SomaliskDanskForening_Test.Repo
 {
@@ -13,7 +14,15 @@ namespace SomaliskDanskForening_Test.Repo
         [TestInitialize]
         public void TestInitialize()
         {
-            _repo = new DonationRepositoryDB();
+           
+            // Use a fresh in-memory database for each test
+            var options = new Microsoft.EntityFrameworkCore.DbContextOptionsBuilder<SomaliskDanskForening_Lib.Data.ForeningDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+            var context = new SomaliskDanskForening_Lib.Data.ForeningDbContext(options);
+            _repo = new DonationRepositoryDB(context);
+             // Seed with a default donation
+            _repo.Add(new Donation { Text = "Støt foreningen — dit bidrag gør en forskel", MobilePay = null });
         }
 
         [TestMethod]
