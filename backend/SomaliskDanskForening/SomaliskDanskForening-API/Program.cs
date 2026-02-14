@@ -1,4 +1,5 @@
 using SomaliskDanskForening_Lib;
+using SomaliskDanskForening_Lib.Data;
 using SomaliskDanskForening_Lib.Interfaces;
 using SomaliskDanskForening_Lib.Repo;
 
@@ -13,8 +14,15 @@ builder.Services.AddControllers();
 // opretter et pair request
 ///builder.Services.AddDbContext<>();
 
-builder.Services.AddSingleton<IEventRepo, EventRepositoryDB>();
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+// Register DbContext (uses OnConfiguring with connection string in ForeningDbContext)
+builder.Services.AddDbContext<ForeningDbContext>();
+
+// Register repositories
+builder.Services.AddScoped<IEventRepo, EventRepositoryDB>();
+builder.Services.AddScoped<IDonationRepo, DonationRepositoryDB>();
+builder.Services.AddScoped<IContactRepo, ContactRepositoryDB>();
 
 builder.Services.AddSwaggerGen();
 
@@ -29,6 +37,13 @@ builder.Services.AddCors(options =>
         });
 });
 var app = builder.Build();
+
+// Ensure database is created for development convenience
+using (var scope = app.Services.CreateScope())
+{
+    var ctx = scope.ServiceProvider.GetRequiredService<ForeningDbContext>();
+    ctx.Database.EnsureCreated();
+}
 
 // Configure the HTTP request pipeline.
 

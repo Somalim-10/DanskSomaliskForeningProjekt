@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SomaliskDanskForening_Lib.Repo;
 using SomaliskDanskForening_Lib.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace SomaliskDanskForening_Test.Repo
 {
@@ -17,7 +18,25 @@ namespace SomaliskDanskForening_Test.Repo
         [TestInitialize]
         public void TestInitialize()
         {
-            _repo = new EventRepositoryDB();
+            var options = new Microsoft.EntityFrameworkCore.DbContextOptionsBuilder<SomaliskDanskForening_Lib.Data.ForeningDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()) // unique DB per test
+                .Options;
+
+            var context = new SomaliskDanskForening_Lib.Data.ForeningDbContext(options);
+
+            // Seed one default event (let EF assign the Id)
+            var seed = new SomaliskDanskForening_Lib.Models.Event
+            {
+                Title = "Somalisk Kultur Festival",
+                Date = new DateTime(2024, 7, 15),
+                StartTime = 18,
+                Duration = 4,
+                Description = "En fejring af somalisk kultur med mad, musik og dans."
+            };
+            context.Events.Add(seed);
+            context.SaveChanges();
+
+            _repo = new SomaliskDanskForening_Lib.Repo.EventRepositoryDB(context);
         }
 
         [TestMethod]

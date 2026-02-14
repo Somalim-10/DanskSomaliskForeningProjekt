@@ -1,4 +1,5 @@
-﻿using SomaliskDanskForening_Lib.Interfaces;
+﻿using SomaliskDanskForening_Lib.Data;
+using SomaliskDanskForening_Lib.Interfaces;
 using SomaliskDanskForening_Lib.Models;
 using System;
 using System.Collections.Generic;
@@ -10,28 +11,38 @@ namespace SomaliskDanskForening_Lib.Repo
 {
     public class EventRepositoryDB : IEventRepo
     {
-        public int nextId = 1;
-        private readonly List<Event> _events = new List<Event>();
+        //public int nextId = 1;
+        //private readonly List<Event> _events = new List<Event>();
 
-        public EventRepositoryDB()
+        public readonly ForeningDbContext _events;
+
+        public EventRepositoryDB( ForeningDbContext foreningDbContext)
         {
-            Add(new Event { Title = "Somalisk Kultur Festival", Date = new DateTime(2024, 7, 15), StartTime = 18, Duration = 4, Description = "En fejring af somalisk kultur med mad, musik og dans." });
+            _events = foreningDbContext;
 
         }
         public Event? Add(Event evt)
         {
-            evt.Id = nextId++;
-            _events.Add(evt);
+            _events.Events.Add(evt);
+            _events.SaveChanges();
             return evt;
         }
+       
+          
+
+        
 
         public Event? GetById(int id)
         {
-            return _events.FirstOrDefault(e => e.Id == id);
+         
+            return _events.Events.FirstOrDefault(e => e.Id == id);
         }
         public List<Event> GetAll()
         {
-            return _events.ToList();
+            return _events.Events.ToList();
+
+
+
         }
         public Event? Update(int id, Event evt)
         {
@@ -43,15 +54,18 @@ namespace SomaliskDanskForening_Lib.Repo
             existing.StartTime = evt.StartTime;
             existing.Duration = evt.Duration;
             existing.Description = evt.Description;
+            _events.SaveChanges();
             return existing;
         }
 
         public Event? Delete(int id)
         {
-            var evt = GetById(id);
-            if (evt == null) return null;
-            _events.Remove(evt);
-            return evt;
+          
+            var existing = GetById(id);
+            if (existing == null) return null;
+            _events.Events.Remove(existing);
+            _events.SaveChanges();
+            return existing;
         }
     }
 }
