@@ -1,33 +1,122 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Home - Somalisk Dansk Forening</title>
-	<link rel="stylesheet" href="../css/style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home - Dansk-Somalisk Forening</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/Index.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 </head>
 <body>
-	<header class="navbar">
-		<div class="nav-logo">
-			<a href="../Index/index.html">
-				<img src="https://s3.ca-central-1.amazonaws.com/logojoy/logos/233936619/noBgColor.png" alt="Logo" />
-			</a>
-		</div>
+    <header class="navbar">
+        <div class="nav-logo">
+            <a href="../Index/index.html">
+                <img src="https://s3.ca-central-1.amazonaws.com/logojoy/logos/233936619/noBgColor.png" alt="Logo" />
+            </a>
+        </div>
 
-		<div class="nav-center">
-			<ul class="nav-links">
-				<li class="active"><a href="../Index/index.html">Home</a></li>
-				<li><a href="../Event/Event.html">Event</a></li>
-				<li><a href="../Donation/Donation.html">Donation</a></li>
-				<li><a href="../Kontakt/Kontakt.html">Contact</a></li>
-				<li><a href="../OmOs/OmOs.html">About</a></li>
-			</ul>
-		</div>
-	</header>
+        <div class="nav-center">
+            <ul class="nav-links">
+                <li class="active"><a href="../Index/index.html">Forside</a></li>
+                <li><a href="../Event/Event.html">Events</a></li>
+                <li><a href="../Donation/Donation.html">Donation</a></li>
+                <li><a href="../Kontakt/Kontakt.html">Kontakt</a></li>
+                <li><a href="../OmOs/OmOs.html">Om os</a></li>
+            </ul>
+        </div>
+    </header>
 
-	<main>
-		<h1>Home</h1>
-		<p>Dette er forsiden. Resten af indholdet kan du bygge her.</p>
-	</main>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="Home">
+            <div class="hero-content">
+                <h1>Velkommen til Dansk-Somalisk Forening</h1>
+                <p class="hero-description">
+                    Vi er en kulturel forening, der bygger bro mellem dansk og somalisk kultur. 
+                    Vores formål er at fremme integration, styrke fællesskab og skabe sociale aktiviteter
+                    for alle aldre.
+                </p>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services" id="Event">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Vores Services</h2>
+                    <p>Vi tilbyder forskellige aktiviteter og arrangementer for vores medlemmer</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="services-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Møder og Foredrag</h3>
+                        <p>Vi arrangerer møder, foredrag og workshops om kultur og integration.</p>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="services-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <h3>Kulturelle Events</h3>
+                        <p>Festivaler, musikarrangementer og sociale sammenkomster for hele familien.</p>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="services-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Fællesskab</h3>
+                        <p>Vi skaber et stærkt netværk, hvor medlemmer kan mødes, dele erfaringer og støtte hinanden.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+		 <section class="Events" id="Event">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Vores Events</h2>
+                    <p>se vores kommende events</p>
+                </div>
+
+		</section>
+
+        <!-- Kommende Events Section -->
+        <section class="events-section">
+            <h2>Kommende Events</h2>
+            <p class="section-description">Se vores næste arrangementer og tilmeld dig</p>
+            <div id="events-container" class="events-grid">
+                <div class="loading">Henter events...</div>
+            </div>
+        </section>
+
+        <!-- Mission Section -->
+        <section class="mission-section">
+            <h2>Vores Formål</h2>
+            <div class="mission-grid">
+                <div class="mission-card">
+                    <h3>🤝 Integration</h3>
+                    <p>Vi arbejder for bedre integration mellem dansk og somalisk kultur gennem dialog og fælles oplevelser.</p>
+                </div>
+                <div class="mission-card">
+                    <h3>🎉 Kulturelle Events</h3>
+                    <p>Vi arrangerer kulturelle begivenheder, festivaler og sociale sammenkomster for hele familien.</p>
+                </div>
+                <div class="mission-card">
+                    <h3>🌍 Fællesskab</h3>
+                    <p>Vi skaber et stærkt fællesskab, hvor medlemmer kan mødes, netværke og støtte hinanden.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Dansk-Somalisk Forening. Alle rettigheder forbeholdes.</p>
+    </footer>
+
+    <script src="../js/index.js"></script>
 </body>
 </html>
