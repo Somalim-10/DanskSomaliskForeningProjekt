@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tilføj event – Admin</title>
+    <title>Rediger donation – Admin</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,15 +18,24 @@
 
         <div class="card-header">
             <div class="card-header-icon">
-                <i class="fas fa-calendar-plus"></i>
+                <i class="fas fa-pen-to-square"></i>
             </div>
             <div>
-                <h1>Tilføj event</h1>
-                <p>Udfyld felterne og gem det nye arrangement</p>
+                <h1>Rediger MobilePay</h1>
+                <p>Opdater MobilePay-nummer og beskrivelse</p>
             </div>
         </div>
 
-        <div class="card-body">
+        <!-- Loading -->
+        <div class="card-body" v-if="isLoading">
+            <div class="loading-overlay">
+                <i class="fas fa-spinner fa-spin"></i>
+                Henter MobilePay-info...
+            </div>
+        </div>
+
+        <!-- Form -->
+        <div class="card-body" v-else>
 
             <div v-if="message" class="message-box" :class="isSuccess ? 'success' : 'error'">
                 <i :class="isSuccess ? 'fas fa-check-circle' : 'fas fa-exclamation-circle'"></i>
@@ -34,29 +43,13 @@
             </div>
 
             <div class="form-group">
-                <label for="title">Titel</label>
-                <input id="title" v-model="formData.title" type="text" placeholder="F.eks. Eid-fejring 2026" />
+                <label for="mobilePay">MobilePay-nummer</label>
+                <input id="mobilePay" v-model="formData.mobilePay" type="text" placeholder="F.eks. 25442" />
             </div>
 
             <div class="form-group">
-                <label for="date">Dato</label>
-                <input id="date" v-model="formData.date" type="date" />
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="startTime">Starttidspunkt (time)</label>
-                    <input id="startTime" v-model.number="formData.startTime" type="number" min="0" max="23" />
-                </div>
-                <div class="form-group">
-                    <label for="duration">Varighed (timer)</label>
-                    <input id="duration" v-model.number="formData.duration" type="number" min="1" max="12" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="description">Beskrivelse</label>
-                <textarea id="description" v-model="formData.description" placeholder="Kort beskrivelse af arrangementet..."></textarea>
+                <label for="text">Beskrivelse</label>
+                <textarea id="text" v-model="formData.text" placeholder="F.eks. Send til Dansk-Somalisk Forening"></textarea>
             </div>
 
         </div>
@@ -65,8 +58,8 @@
             <button class="btn btn-secondary" @click="goBack">
                 <i class="fas fa-arrow-left"></i> Tilbage
             </button>
-            <button class="btn btn-primary" @click="addItem" :disabled="isSuccess">
-                <i class="fas fa-save"></i> Gem event
+            <button class="btn btn-primary" @click="updateItem" :disabled="isLoading || isSuccess">
+                <i class="fas fa-save"></i> Gem ændringer
             </button>
         </div>
 
@@ -75,6 +68,6 @@
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="addEvent.js"></script>
+<script src="editDonation.js"></script>
 </body>
 </html>

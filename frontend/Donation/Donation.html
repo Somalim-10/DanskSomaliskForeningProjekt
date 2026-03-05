@@ -1,33 +1,208 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="da">
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Donation - Somalisk Dansk Forening</title>
-	<link rel="stylesheet" href="../css/style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Donation - Dansk-Somalisk Forening</title>
+    <!-- Google Fonts (samme som resten af sitet) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Global styles (navbar, footer, variabler) -->
+    <link rel="stylesheet" href="../css/style.css" />
+    <!-- Side-specifik styling -->
+    <link rel="stylesheet" href="../css/Donation.css" />
 </head>
 <body>
-	<header class="navbar">
-		<div class="nav-logo">
-			<a href="../Index/index.html">
-				<img src="https://s3.ca-central-1.amazonaws.com/logojoy/logos/233936619/noBgColor.png" alt="Logo" />
-			</a>
-		</div>
+    <!-- NAVBAR (bruger din globale navbar) -->
+    <header class="navbar">
+        <div class="nav-logo">
+            <a href="../Index/index.html">
+                <img src="https://s3.ca-central-1.amazonaws.com/logojoy/logos/233936619/noBgColor.png" alt="Dansk-Somalisk Forening" />
+            </a>
+        </div>
+        <div class="nav-center">
+            <ul class="nav-links">
+                <li><a href="../Index/index.html">Forside</a></li>
+                <li><a href="../Event/Event.html">Events</a></li>
+                <li class="active"><a href="../Donation/Donation.html">Donation</a></li>
+                <li><a href="../Kontakt/Kontakt.html">Kontakt</a></li>
+                <li><a href="../OmOs/OmOs.html">Om os</a></li>
+            </ul>
+        </div>
+    </header>
 
-		<div class="nav-center">
-			<ul class="nav-links">
-				<li><a href="../Index/index.html">Home</a></li>
-				<li><a href="../Event/Event.html">Event</a></li>
-				<li class="active"><a href="../Donation/Donation.html">Donation</a></li>
-				<li><a href="../Kontakt/Kontakt.html">Contact</a></li>
-				<li><a href="../OmOs/OmOs.html">About</a></li>
-			</ul>
-		</div>
-	</header>
+    <main id="app">
+        <!-- HERO SECTION -->
+        <section class="donation-hero">
+            <div class="hero-inner">
+                <div class="hero-text">
+                    <span class="hero-badge">Donation</span>
+                    <h1>Støt vores forening<br><span>med en donation</span></h1>
+                    <p>{{ donation.text }}</p>
+                    <a :href="`Edit.html?id=${donation.id}`" class="hero-edit-btn"><i class="fas fa-pen"></i> Rediger indhold</a>
+                </div>
+                <div class="hero-icon-block">
+                    <div class="hero-icon-circle">
+                        <i class="fas fa-hand-holding-heart" style="color: rgba(255,255,255,0.9);"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-	<main>
-		<h1>Donation</h1>
-		<p>Her kan du fortælle, hvordan man kan støtte eller donere.</p>
-	</main>
+        <!-- STEPS SEKTION -->
+        <section class="steps-section">
+            <div class="section-label">Sådan gør du</div>
+            <h2 class="section-title">Donér på <span>få minutter</span></h2>
+            <p class="section-subtitle">Det er nemt at støtte os. Følg disse simple trin.</p>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Vælg dit beløb</h3>
+                    <p>Beslut selv, hvor meget du ønsker at donere — alle beløb er velkomne og gør en forskel for foreningen.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Overfør via bank</h3>
+                    <p>Overfør til vores bankkonto med dit navn og "Donation" som beskedtekst, så vi kan identificere overførslen.</p>
+                </div>
+               
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Se din donation i brug</h3>
+                    <p>Hold øje med vores events og nyheder — dit bidrag giver direkte resultater i lokalsamfundet.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURES SEKTION -->
+        <section class="features-section">
+            <div class="features-inner">
+                <div class="section-label">Hvorfor donere</div>
+                <h2 class="section-title">Hvad din donation <span>betyder</span></h2>
+                <p class="section-subtitle">Hver krone gør en forskel. Her er hvad vi tilbyder vores donorer.</p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                        <h3>Alle beløb er velkomne</h3>
+                        <p>Uanset om du donerer 50 kr. eller 5.000 kr., bidrager du til foreningens fremtid og fællesskabet.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-bullseye"></i></div>
+                        <h3>100% til formålet</h3>
+                        <p>Din donation går direkte til foreningens aktiviteter — ingen skjulte gebyrer eller administrationsomkostninger.</p>
+                    </div>
+                 
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-eye"></i></div>
+                        <h3>Fuld gennemsigtighed</h3>
+                        <p>Vi offentliggør regelmæssigt, hvad donationerne bruges til, så du altid ved, din støtte gør gavn.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-users"></i></div>
+                        <h3>Styrk fællesskabet</h3>
+                        <p>Din donation hjælper os med at nå ud til flere familier og skabe endnu stærkere bånd i foreningen.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                        <h3>Vi er her for dig</h3>
+                        <p>Har du spørgsmål til din donation? Kontakt os via e-mail eller telefon — vi svarer altid hurtigt.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- IMPACT SEKTION -->
+        <section class="impact-section">
+            <div class="section-label">Din indflydelse</div>
+            <h2 class="section-title">Hvad du <span>støtter</span></h2>
+            <p class="section-subtitle">Dine bidrag finansierer konkrete aktiviteter og projekter i foreningen.</p>
+            <div class="impact-grid">
+                <div class="impact-card">
+                    
+                    <h3>Ungdomsaktiviteter</h3>
+                    <p>Vi arrangerer aktiviteter og workshops for unge i foreningen for at styrke identitet, tilhørsforhold og fremtidsmuligheder.</p>
+                </div>
+                <div class="impact-card">
+                    <h3>Kulturelle events</h3>
+                    <p>Fra Eid-fejringer til kulturdage — dine donationer gør det muligt at afholde fælles begivenheder, der samler hele fællesskabet.</p>
+                </div>
+                <div class="impact-card">
+                    <h3>Social støtte</h3>
+                    <p>Vi hjælper familier i vanskeligheder med rådgivning, vejledning og praktisk støtte — til gavn for hele lokalsamfundet.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BANKOVERFØRSEL + MOBILEPAY -->
+        <section class="bank-section" id="bankoverforsel">
+            <div class="bank-inner">
+                <h2>Donér via bankoverførsel</h2>
+                <p>Overfør dit beløb direkte til foreningens konto. Husk at skrive dit navn og "Donation" i beskedfeltet.</p>
+                <div class="bank-details">
+                    <div class="bank-detail-item">
+                        <div class="label">Registreringsnummer</div>
+                        <div class="value">XXXX</div>
+                    </div>
+                    <div class="bank-detail-item">
+                        <div class="label">Kontonummer</div>
+                        <div class="value">XXXXXXXXXX</div>
+                    </div>
+                    <div class="bank-detail-item">
+                        <div class="label">Kontoindehaver</div>
+                        <div class="value">Dansk-Somalisk Forening</div>
+                    </div>
+                </div>
+
+                <!-- MOBILEPAY – hentes fra API -->
+                <div>
+                    <div v-if="loading" class="mobilepay-loading">
+                        <i class="fas fa-spinner fa-spin"></i> Henter MobilePay-info...
+                    </div>
+
+                    <div v-else-if="error" class="bank-note" style="color: rgba(255,255,255,0.5);">
+                        <i class="fas fa-exclamation-circle" style="margin-right: 0.4rem;"></i>{{ error }}
+                    </div>
+
+                    <div v-else class="mobilepay-block">
+                        <div class="mobilepay-divider"></div>
+                        <div class="mobilepay-card">
+                            <div class="mobilepay-logo">
+                                <i class="fas fa-mobile-screen-button"></i>
+                                <span>MobilePay</span>
+                            </div>
+                            <img
+                                class="mobilepay-qr"
+                                :src="`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=mobilepay%3A%2F%2Fsend%3Fphone%3D${donation.mobilePay}&bgcolor=ffffff&color=1D3E5E&margin=10`"
+                                :alt="`Scan QR-kode og send til MobilePay ${donation.mobilePay}`"
+                            />
+                            <p class="mobilepay-qr-hint">Scan med din telefon</p>
+                            <div class="mobilepay-number">{{ donation.mobilePay }}</div>
+                            <p class="mobilepay-desc" v-if="donation.text"></p>
+                        </div>
+                        <a :href="`Edit.html?id=${donation.id}`" class="mobilepay-edit-btn">
+                            <i class="fas fa-pen"></i> Rediger MobilePay
+                        </a>
+                    </div>
+                </div>
+
+                <p class="bank-note"><i class="fas fa-info-circle" style="margin-right: 0.4rem;"></i>Alle donationer går direkte til foreningens aktiviteter. Ingen gebyrer.</p>
+            </div>
+        </section>
+
+       
+    </main>
+
+    <!-- FOOTER (global) -->
+    <footer class="footer">
+        <p>&copy; 2026 Dansk-Somalisk Forening. Alle rettigheder forbeholdes.</p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="donation.js"></script>
 </body>
 </html>

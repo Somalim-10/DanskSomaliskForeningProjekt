@@ -1,0 +1,188 @@
+/* ===== ADMIN FORM – bruges af Add.html og Edit.html ===== */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #f0f4f9;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    color: #1a2332;
+}
+
+.admin-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 560px;
+    overflow: hidden;
+}
+
+.card-header {
+    background: linear-gradient(135deg, #1D3E5E 0%, #2E5A88 100%);
+    padding: 2rem 2.5rem 1.8rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.card-header-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.card-header h1 {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.card-header p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 0.15rem;
+}
+
+.card-body {
+    padding: 2.2rem 2.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.4rem;
+}
+
+label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #3a4a5c;
+    margin-bottom: 0.45rem;
+    letter-spacing: 0.3px;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid #dde3ec;
+    border-radius: 10px;
+    font-size: 0.97rem;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #1a2332;
+    background: #fafbfc;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #2E5A88;
+    box-shadow: 0 0 0 3px rgba(46, 90, 136, 0.1);
+    background: white;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.message-box {
+    padding: 0.85rem 1.1rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.message-box.success {
+    background: #edfaf3;
+    color: #1a7a4a;
+    border: 1px solid #b6e8cc;
+}
+
+.message-box.error {
+    background: #fff0f0;
+    color: #b30000;
+    border: 1px solid #ffc0c0;
+}
+
+/* Kun brugt i Edit.html */
+.loading-overlay {
+    text-align: center;
+    padding: 3rem 0 1rem;
+    color: #5a6a7e;
+    font-size: 0.97rem;
+}
+
+.loading-overlay i {
+    font-size: 2rem;
+    color: #2E5A88;
+    display: block;
+    margin-bottom: 0.8rem;
+}
+
+.card-footer {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0 2.5rem 2.2rem;
+}
+
+.btn {
+    flex: 1;
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.97rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.btn-primary {
+    background: #2E5A88;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #1D3E5E;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(46, 90, 136, 0.3);
+}
+
+.btn-secondary {
+    background: #f0f4f9;
+    color: #3a4a5c;
+}
+
+.btn-secondary:hover {
+    background: #e0e8f2;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}

@@ -7,20 +7,13 @@ using SomaliskDanskForening_Lib.Repo;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-//et objekt gennem hele applikationens leve
-//builder.Services.AddSingleton<PantsRepository>();
-// opretter et pair request
-///builder.Services.AddDbContext<>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// Register DbContext (uses OnConfiguring with connection string in ForeningDbContext)
+// Register DbContext
 builder.Services.AddDbContext<ForeningDbContext>(options =>
     options.UseSqlServer(connectionString));
-
 
 // Register repositories
 builder.Services.AddScoped<IEventRepo, EventRepositoryDB>();
@@ -29,31 +22,31 @@ builder.Services.AddScoped<IContactRepo, ContactRepositoryDB>();
 
 builder.Services.AddSwaggerGen();
 
+// CORS: dev-friendly policy (consider restricting origins for production)
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
-        policy =>
-        {
-            policy.WithOrigins()
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
 });
+
 var app = builder.Build();
 
-
-
+// IMPORTANT: apply CORS before HTTPS redirection so preflight/redirect responses include CORS headers
+app.UseCors();
 
 // Configure the HTTP request pipeline.
-
 app.UseHttpsRedirection();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors();
-
+    
 app.UseAuthorization();
 
 app.MapControllers();

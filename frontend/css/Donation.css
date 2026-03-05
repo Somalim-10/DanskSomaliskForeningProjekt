@@ -1,0 +1,439 @@
+﻿.donation-hero{
+      background: linear-gradient(135deg, #1D3E5E 0%, #2E5A88 60%, #3a6fa8 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 94%);
+    padding: 10rem 2.5rem 8rem;
+    color: white;
+    overflow: hidden;
+    position: relative;
+}
+
+.donation-hero::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+    pointer-events: none;
+}
+.donation-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 60px;
+    left: -60px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+    pointer-events: none;
+}
+.hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4rem;
+}
+.hero-text {
+    flex: 1;
+    max-width: 580px;
+}
+.hero-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+}
+.donation-hero h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 1.2rem;
+    color: white;
+}
+.donation-hero h1 span {
+    color: #a8c8f0;
+}
+.donation-hero p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 0.8rem;
+}
+.hero-icon-block {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hero-icon-circle {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+}
+.steps-section {
+    max-width: 1100px;
+    margin: 6rem auto;
+    padding: 0 2.5rem;
+}
+.section-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #2E5A88;
+    margin-bottom: 0.6rem;
+}
+
+.section-title {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800;
+    color: #1a2332;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+}
+.section-title span {
+    color: #2E5A88;
+}
+.section-subtitle {
+    font-size: 1.05rem;
+    color: #5a6a7e;
+    margin-bottom: 3rem;
+}
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    margin-top: 2.5rem;
+}
+.step-card {
+    background: white;
+    border: 1px solid #e8edf4;
+    border-radius: 16px;
+    padding: 2rem 1.8rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    position: relative;
+}
+.step-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 28px rgba(46, 90, 136, 0.12);
+    border-color: #2E5A88;
+}
+.step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #2E5A88;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+}
+.step-card h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1a2332;
+    margin-bottom: 0.6rem;
+}
+.step-card p {
+    font-size: 0.95rem;
+    color: #5a6a7e;
+    line-height: 1.6;}
+    .features-section {
+    background: #f4f7fb;
+    padding: 5rem 2.5rem;
+}
+.features-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.8rem;
+    margin-top: 2.5rem;
+}
+.feature-card {
+    background: white;
+    border-radius: 14px;
+    padding: 1.8rem 1.5rem 1.8rem 2rem;
+    border-left: 3px solid #2E5A88;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+.feature-card:hover {
+    box-shadow: 0 6px 24px rgba(46, 90, 136, 0.1);
+    transform: translateY(-3px);
+}
+.feature-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: #e8edf4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: #2E5A88;
+}
+.feature-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a2332;
+    margin-bottom: 0.5rem;
+}
+.feature-card p {
+    font-size: 0.92rem;
+    color: #5a6a7e;
+    line-height: 1.6;
+}
+.impact-section {
+    max-width: 1100px;
+    margin: 5rem auto;
+    padding: 0 2.5rem;
+}
+.impact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 2rem;
+    margin-top: 2.5rem;
+}
+.impact-card {
+    border-radius: 16px;
+    padding: 2.2rem;
+    background: white;
+    border: 1px solid #e8edf4;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+}
+.impact-card:hover {
+    border-color: #2E5A88;
+    box-shadow: 0 8px 28px rgba(46, 90, 136, 0.1);
+}
+.impact-card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1a2332;
+    margin-bottom: 0.6rem;
+}
+.impact-card p {
+    font-size: 0.95rem;
+    color: #5a6a7e;
+    line-height: 1.65;
+}
+.bank-section {
+    background: linear-gradient(135deg, #1D3E5E 0%, #2E5A88 100%);
+    padding: 5rem 2.5rem;
+    color: white;
+}
+.bank-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+.bank-inner h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800;
+    color: white;
+    margin-bottom: 0.8rem;
+}
+.bank-inner > p {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 2.5rem;
+}
+.bank-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+.bank-detail-item {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 14px;
+    padding: 1.5rem 2.2rem;
+    min-width: 200px;
+}
+.bank-detail-item .label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 0.4rem;
+}
+.bank-detail-item .value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.5px;
+}
+.bank-note {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.65);
+    margin-top: 1.2rem;
+}
+
+/* ── MOBILEPAY ──────────────────────────────────────── */
+.mobilepay-loading {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+}
+
+.mobilepay-divider {
+    width: 60px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 2.5rem auto 2rem;
+    border-radius: 2px;
+}
+
+.mobilepay-card {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 18px;
+    padding: 2rem 3rem;
+    text-align: center;
+    min-width: 260px;
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+}
+
+.mobilepay-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.mobilepay-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.8rem;
+}
+
+.mobilepay-logo i {
+    font-size: 1.2rem;
+    color: #a8c8f0;
+}
+
+.mobilepay-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+    letter-spacing: 2px;
+    margin-bottom: 0.6rem;
+}
+
+.mobilepay-qr {
+    display: block;
+    width: 160px;
+    height: 160px;
+    border-radius: 14px;
+    margin: 0 auto 0.6rem;
+    background: white;
+    padding: 6px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mobilepay-qr:hover {
+    transform: scale(1.04);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.mobilepay-qr-hint {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 1rem;
+}
+
+.mobilepay-desc {
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.5;
+    max-width: 260px;
+    margin: 0 auto;
+}
+
+.mobilepay-edit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.2rem;
+    padding: 0.55rem 1.2rem;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.mobilepay-edit-btn:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white;
+}
+
+.hero-edit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.4rem;
+    padding: 0.6rem 1.3rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.hero-edit-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.6);
+    color: white;
+}
