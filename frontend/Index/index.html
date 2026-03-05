@@ -3,16 +3,25 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home - Dansk-Somalisk Forening</title>
+    <title>Dansk-Somalisk Forening | Forside</title>
+    
+    <!-- Google Fonts (tilføj dette i head) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Dine CSS filer -->
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/Index.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 </head>
 <body>
     <header class="navbar">
         <div class="nav-logo">
             <a href="../Index/index.html">
-                <img src="https://s3.ca-central-1.amazonaws.com/logojoy/logos/233936619/noBgColor.png" alt="Logo" />
+                <img src="https://s3.ca-central-1.amazonaws.com/logojoy/logos/233936619/noBgColor.png" alt="Dansk-Somalisk Forening" />
             </a>
         </div>
 
@@ -27,96 +36,108 @@
         </div>
     </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero" id="Home">
-            <div class="hero-content">
-                <h1>Velkommen til Dansk-Somalisk Forening</h1>
-                <p class="hero-description">
-                    Vi er en kulturel forening, der bygger bro mellem dansk og somalisk kultur. 
-                    Vores formål er at fremme integration, styrke fællesskab og skabe sociale aktiviteter
-                    for alle aldre.
-                </p>
-            </div>
-        </section>
-
-        <!-- Services Section -->
-        <section class="services" id="Event">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Vores Services</h2>
-                    <p>Vi tilbyder forskellige aktiviteter og arrangementer for vores medlemmer</p>
+    <div id="app">
+        <main>
+            <!-- Hero Section -->
+            <section class="hero" id="Home">
+                <div class="hero-content">
+                    <h1>Velkommen til Dansk-Somalisk Forening</h1>
+                    <p class="hero-description">
+                        Vi bygger bro mellem dansk og somalisk kultur gennem fællesskab, 
+                        integration og meningsfulde arrangementer for alle generationer.
+                    </p>
                 </div>
-                <div class="services-grid">
-                    <div class="service-card">
-                        <div class="services-icon">
-                            <i class="fas fa-users"></i>
+            </section>
+            
+            <section class="mission-section">
+                <div class="container">
+                    <h2>Vores Formål</h2>
+                    <div class="mission-grid">
+                        <div class="mission-card">
+                            <h3>🤝 Integration</h3>
+                            <p>Vi skaber mødesteder hvor dansk og somalisk kultur mødes, og hvor nye fællesskaber kan opstå gennem dialog og fælles oplevelser.</p>
                         </div>
-                        <h3>Møder og Foredrag</h3>
-                        <p>Vi arrangerer møder, foredrag og workshops om kultur og integration.</p>
-                    </div>
-
-                    <div class="service-card">
-                        <div class="services-icon">
-                            <i class="fas fa-calendar-check"></i>
+                        <div class="mission-card">
+                            <h3>🎉 Kulturelle Events</h3>
+                            <p>Fra somaliske middage til danske højtider - vi arrangerer begivenheder der fejrer begge kulturer og samler mennesker på tværs.</p>
                         </div>
-                        <h3>Kulturelle Events</h3>
-                        <p>Festivaler, musikarrangementer og sociale sammenkomster for hele familien.</p>
-                    </div>
-
-                    <div class="service-card">
-                        <div class="services-icon">
-                            <i class="fas fa-handshake"></i>
+                        <div class="mission-card">
+                            <h3>🌍 Fællesskab</h3>
+                            <p>Et stærkt netværk hvor medlemmer støtter hinanden, deler erfaringer og skaber varige venskaber på tværs af generationer.</p>
                         </div>
-                        <h3>Fællesskab</h3>
-                        <p>Vi skaber et stærkt netværk, hvor medlemmer kan mødes, dele erfaringer og støtte hinanden.</p>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+            <!-- Kommende Events Section -->
+            <section class="services" id="Event">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Kommende Events</h2>
+                        <p>Bliv en del af fællesskabet ved vores næste arrangementer</p>
+                    </div>
+                    
+                    <!-- Loading -->
+                    <div v-if="items.length === 0 && !message" class="loading-message">
+                        <i class="fas fa-spinner fa-spin" style="margin-right: 0.5rem;"></i>
+                        Henter events...
+                    </div>
 
-		 <section class="Events" id="Event">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Vores Events</h2>
-                    <p>se vores kommende events</p>
+                    <!-- Fejlbesked -->
+                    <div v-if="message" class="no-events-message">
+                        <i class="fas fa-exclamation-circle" style="color: var(--secondary); margin-right: 0.5rem;"></i>
+                        {{ message }}
+                    </div>
+
+                    <!-- Ingen kommende events -->
+                    <div v-else-if="upcomingEvents.length === 0" class="no-events-message">
+                        <i class="fas fa-calendar-times" style="color: var(--secondary); margin-right: 0.5rem;"></i>
+                        Ingen kommende events i øjeblikket
+                    </div>
+
+                    <!-- Events Grid -->
+                    <div v-else class="services-grid">
+                        <div v-for="event in upcomingEvents" :key="event.id" class="service-card">
+                            <div class="event-date-badge">
+                                <span class="date-day">{{ formatDay(event.date) }}</span>
+                                <span class="date-month">{{ formatMonth(event.date) }}</span>
+                            </div>
+                            <h3>{{ event.title }}</h3>
+                            <div class="event-time">
+                                <i class="fas fa-clock"></i>
+                                {{ event.startTime }}:00 - {{ event.startTime + event.duration }}:00
+                            </div>
+                            <p>{{ event.description }}</p>
+                        </div>
+                    </div>
                 </div>
+            </section>
 
-		</section>
+            <!-- Mission Section -->
+        </main>
 
-        <!-- Kommende Events Section -->
-        <section class="events-section">
-            <h2>Kommende Events</h2>
-            <p class="section-description">Se vores næste arrangementer og tilmeld dig</p>
-            <div id="events-container" class="events-grid">
-                <div class="loading">Henter events...</div>
-            </div>
-        </section>
+        <footer class="footer">
+            <p>&copy; 2026 Dansk-Somalisk Forening. Alle rettigheder forbeholdes.</p>
+        </footer>
+    </div>
 
-        <!-- Mission Section -->
-        <section class="mission-section">
-            <h2>Vores Formål</h2>
-            <div class="mission-grid">
-                <div class="mission-card">
-                    <h3>🤝 Integration</h3>
-                    <p>Vi arbejder for bedre integration mellem dansk og somalisk kultur gennem dialog og fælles oplevelser.</p>
-                </div>
-                <div class="mission-card">
-                    <h3>🎉 Kulturelle Events</h3>
-                    <p>Vi arrangerer kulturelle begivenheder, festivaler og sociale sammenkomster for hele familien.</p>
-                </div>
-                <div class="mission-card">
-                    <h3>🌍 Fællesskab</h3>
-                    <p>Vi skaber et stærkt fællesskab, hvor medlemmer kan mødes, netværke og støtte hinanden.</p>
-                </div>
-            </div>
-        </section>
-    </main>
+    <!-- Scripts -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 
-    <footer class="footer">
-        <p>&copy; 2026 Dansk-Somalisk Forening. Alle rettigheder forbeholdes.</p>
-    </footer>
-
-    <script src="../js/index.js"></script>
+    <!-- Scroll effekt til navbar -->
+    <script>
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+    
+    <!-- Dine event scripts -->
+    <script src="../Event/indexEvents.js"></script>
 </body>
 </html>

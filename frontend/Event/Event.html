@@ -1,40 +1,176 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Event - Somalisk Dansk Forening</title>
-	<link rel="stylesheet" href="../css/style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Events - Dansk-Somalisk Forening</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Global style (navbar, footer, variabler) -->
+    <link rel="stylesheet" href="../css/style.css" />
+
+    <!-- Event-specifik style -->
+    <link rel="stylesheet" href="../css/Event.css" />
 </head>
 <body>
-	<header class="navbar">
-		<div class="nav-logo">
-			<a href="../Index/index.html">
-				<img src="https://s3.ca-central-1.amazonaws.com/logojoy/logos/233936619/noBgColor.png" alt="Logo" />
-			</a>
-		</div>
 
-		<div class="nav-center">
-			<ul class="nav-links">
-				<li><a href="../Index/index.html">Home</a></li>
-				<li class="active"><a href="../Event/Event.html">Event</a></li>
-				<li><a href="../Donation/Donation.html">Donation</a></li>
-				<li><a href="../Kontakt/Kontakt.html">Contact</a></li>
-				<li><a href="../OmOs/OmOs.html">About</a></li>
-			</ul>
-		</div>
-	</header>
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="nav-logo">
+            <a href="../Index/index.html">
+                <img src="https://s3.ca-central-1.amazonaws.com/logojoy/logos/233936619/noBgColor.png" alt="Dansk-Somalisk Forening" />
+            </a>
+        </div>
+        <div class="nav-center">
+            <ul class="nav-links">
+                <li><a href="../Index/index.html">Forside</a></li>
+                <li class="active"><a href="../Event/Event.html">Events</a></li>
+                <li><a href="../Donation/Donation.html">Donation</a></li>
+                <li><a href="../Kontakt/Kontakt.html">Kontakt</a></li>
+                <li><a href="../OmOs/OmOs.html">Om os</a></li>
+            </ul>
+        </div>
+    </header>
 
-	<section class="hero" id="Event">
-<div class=" hero-content">
-	<h1>Foreningen kommende Events</h1>
-	<p>Foreningens forsamling med samtaler og forenelse</p>
-	<a href=""></a>
+    <main>
+        <!-- HERO SEKTION -->
+        <section class="event-hero">
+            <div class="hero-inner">
+                <div class="hero-text">
+                    <span class="hero-badge">Events</span>
+                    <h1>Kommende<br><span>arrangementer</span></h1>
+                    <p>Bliv en del af fællesskabet og deltag i vores arrangementer. Fra kulturelle fejringer til sociale sammenkomster — der er noget for alle.</p>
+                    <p>Alle events er åbne for hele foreningen og nye ansigter er altid velkomne.</p>
+                    <a href="Add.html" class="hero-cta">
+                        <i class="fas fa-plus"></i> Tilføj nyt event
+                    </a>
+                </div>
+                <div class="hero-icon-block">
+                    <div class="hero-icon-circle">
+                        <i class="fas fa-calendar-star" style="color: rgba(255,255,255,0.9);"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-</div>
+        <!-- EVENTS SEKTION -->
+        <section class="events-section">
+            <div class="section-label">Alle arrangementer</div>
+            <h2 class="section-title">Vores <span>events</span></h2>
+            <p class="section-subtitle">Find og udforsk kommende og tidligere arrangementer fra foreningen.</p>
 
+            <!-- VUE APP -->
+            <div id="app">
+                <div class="event-container">
 
-	</section>
-	<script> src="Event.js"</script>
+                    <!-- Værktøjslinje -->
+                    <div class="toolbar">
+                        <div class="sort-buttons">
+                            <button class="sort-btn" @click="sortByDate">
+                                <i class="fas fa-calendar-alt"></i> Dato
+                            </button>
+                            <button class="sort-btn" @click="sortByTitle">
+                                <i class="fas fa-sort-alpha-down"></i> Titel
+                            </button>
+                        </div>
+                        <div v-if="message" class="message-area">
+                            <i class="fas fa-info-circle"></i> {{ message }}
+                        </div>
+                    </div>
+
+                    <!-- Loading -->
+                    <div v-if="items.length === 0 && !message" class="loading-state">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Henter events...</p>
+                    </div>
+
+                    <!-- Fejlbesked -->
+                    <div v-else-if="message && items.length === 0" class="error-state">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>{{ message }}</p>
+                    </div>
+
+                    <!-- Ingen events -->
+                    <div v-else-if="items.length === 0" class="empty-state">
+                        <i class="fas fa-calendar-times"></i>
+                        <p>Ingen events i øjeblikket</p>
+                        <a href="Add.html" class="empty-cta">
+                            <i class="fas fa-plus"></i> Tilføj det første event
+                        </a>
+                    </div>
+
+                    <!-- Grid med events -->
+                    <div v-else class="events-grid">
+                        <div v-for="event in items" :key="event.id" class="event-card">
+
+                            <!-- Dato badge -->
+                            <div class="event-date-badge">
+                                <span class="day">{{ formatDay(event.date) }}</span>
+                                <span class="month">{{ formatMonth(event.date) }}</span>
+                            </div>
+
+                            <!-- Indhold -->
+                            <div class="event-content">
+                                <h3 class="event-title">{{ event.title }}</h3>
+                                <div class="event-meta">
+                                    <span class="event-time">
+                                        <i class="fas fa-clock"></i>
+                                        {{ event.startTime }}:00 – {{ event.startTime + event.duration }}:00
+                                    </span>
+                                    <span class="event-full-date">
+                                        <i class="fas fa-calendar"></i>
+                                        {{ formatDate(event.date) }}
+                                    </span>
+                                </div>
+                                <p class="event-description">{{ event.description }}</p>
+
+                                <!-- Handlingsknapper -->
+                                <div class="event-actions">
+                                    <button class="action-btn edit-btn" @click="editEvent(event.id)">
+                                        <i class="fas fa-edit"></i> Rediger
+                                    </button>
+                                    <button class="action-btn delete-btn" @click="deleteItem(event.id)">
+                                        <i class="fas fa-trash-alt"></i> Slet
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2026 Dansk-Somalisk Forening. Alle rettigheder forbeholdes.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- Scroll effekt til navbar -->
+    <script>
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+
+    <!-- Event Vue script -->
+    <script src="Event.js"></script>
 </body>
 </html>

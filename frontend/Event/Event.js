@@ -42,6 +42,17 @@ Vue.createApp({
       this.message = "🔤 Sorteret efter titel";
     },
 
+    // Hjælpemetoder til datovisning
+    formatDay(dateString) {
+      const date = new Date(dateString);
+      return date.getDate().toString().padStart(2, '0');
+    },
+
+    formatMonth(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('da-DK', { month: 'short' }).replace('.', '');
+    },
+
     formatDate(dateString) {
       const date = new Date(dateString);
       return date.toLocaleDateString('da-DK', {
@@ -52,7 +63,7 @@ Vue.createApp({
     },
 
     editEvent(id) {
-      window.location.href = `EditEvent.html?id=${id}`;
+      window.location.href = `Edit.html?id=${id}`;
     }
   },
 
