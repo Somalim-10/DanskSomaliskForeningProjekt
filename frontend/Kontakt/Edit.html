@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rediger kontakt – Admin</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/admin-form.css" />
+</head>
+<body>
+
+<div id="app">
+    <div class="admin-card">
+
+        <div class="card-header">
+            <div class="card-header-icon">
+                <i class="fas fa-pen-to-square"></i>
+            </div>
+            <div>
+                <h1>Rediger kontakt</h1>
+                <p>Opdater foreningens kontaktoplysninger</p>
+            </div>
+        </div>
+
+        <!-- Loading -->
+        <div class="card-body" v-if="isLoading">
+            <div class="loading-overlay">
+                <i class="fas fa-spinner fa-spin"></i>
+                Henter kontaktoplysninger...
+            </div>
+        </div>
+
+        <!-- Form -->
+        <div class="card-body" v-else>
+
+            <div v-if="message" class="message-box" :class="isSuccess ? 'success' : 'error'">
+                <i :class="isSuccess ? 'fas fa-check-circle' : 'fas fa-exclamation-circle'"></i>
+                {{ message }}
+            </div>
+
+            <div class="form-group">
+                <label for="address">Adresse</label>
+                <textarea id="address" v-model="formData.address" placeholder="F.eks. Hovedgaden 1, 2100 København Ø"></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="phone">Telefon</label>
+                    <input id="phone" v-model="formData.phone" type="text" placeholder="F.eks. +45 12 34 56 78" />
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input id="email" v-model="formData.email" type="email" placeholder="F.eks. info@forening.dk" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="googleMapsUrl">Google Maps URL <span style="font-weight:400; color:#888;">(valgfri)</span></label>
+                <input id="googleMapsUrl" v-model="formData.googleMapsUrl" type="text" placeholder="F.eks. https://www.google.com/maps/embed?..." />
+            </div>
+
+        </div>
+
+        <div class="card-footer">
+            <button class="btn btn-secondary" @click="goBack">
+                <i class="fas fa-arrow-left"></i> Tilbage
+            </button>
+            <button class="btn btn-primary" @click="updateItem" :disabled="isLoading || isSuccess">
+                <i class="fas fa-save"></i> Gem ændringer
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="editKontakt.js"></script>
+</body>
+</html>
