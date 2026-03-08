@@ -1,48 +1,205 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Om os - Dansk-Somalisk Forening</title>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-	<link rel="stylesheet" href="../css/style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Om os - Dansk-Somalisk Forening</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Global styles -->
+    <link rel="stylesheet" href="../css/style.css" />
+    <!-- Side-specifik styling -->
+    <link rel="stylesheet" href="../css/OmOs.css" />
 </head>
 <body>
-	<header class="navbar">
-		<div class="nav-logo">
-			<a href="../Index/index.html">
-				<img src="https://s3.ca-central-1.amazonaws.com/logojoy/logos/233936619/noBgColor.png" alt="Logo" />
-			</a>
-		</div>
 
-		<div class="nav-center">
-			<ul class="nav-links">
-				<li><a href="../Index/index.html">Forside</a></li>
-				<li><a href="../Event/Event.html">Events</a></li>
-				<li><a href="../Donation/Donation.html">Donation</a></li>
-				<li><a href="../Kontakt/Kontakt.html">Kontakt</a></li>
-				<li class="active"><a href="../OmOs/OmOs.html">Om os</a></li>
-			</ul>
-		</div>
-	</header>
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="nav-logo">
+            <a href="../Index/index.html">
+                <img src="https://img.sanishtech.com/u/b15c9a34e098cb17103cbdac2d2a25f5.png" alt="Dansk-Somalisk Forening" />
+            </a>
+        </div>
+        <div class="nav-center">
+            <ul class="nav-links">
+                <li><a href="../Index/index.html">Forside</a></li>
+                <li><a href="../Event/Event.html">Events</a></li>
+                <li><a href="../Donation/Donation.html">Donation</a></li>
+                <li><a href="../Kontakt/Kontakt.html">Kontakt</a></li>
+                <li class="active"><a href="../OmOs/OmOs.html">Om os</a></li>
+            </ul>
+        </div>
+    </header>
 
-	<main>
-		<h1>Om os</h1>
-		<p>Her kan du skrive om foreningen, mission, vision m.m.</p>
-	</main>
+    <main>
 
-	<script>
-		window.addEventListener('scroll', function() {
-			const navbar = document.querySelector('.navbar');
-			if (window.scrollY > 50) {
-				navbar.classList.add('scrolled');
-			} else {
-				navbar.classList.remove('scrolled');
-			}
-		});
-	</script>
+        <!-- HERO SECTION -->
+        <section class="omos-hero">
+            <div class="hero-inner">
+                <div class="hero-text">
+                    <span class="hero-badge">Om os</span>
+                    <h1>Hvem er <span>Dansk-Somalisk Forening?</span></h1>
+                    <p>Vi er en frivillig forening der bygger bro mellem dansk og somalisk kultur. Siden vores stiftelse har vi arbejdet for integration, fællesskab og gensidig forståelse.</p>
+                </div>
+                <div class="hero-icon-block">
+                    <div class="hero-icon-circle">
+                        <i class="fas fa-handshake" style="color: rgba(255,255,255,0.9);"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VISION & MISSION -->
+        <section class="vm-section">
+            <div class="section-label">Hvad driver os</div>
+            <h2 class="section-title">Vores <span>mission og vision</span></h2>
+            <p class="section-subtitle">Vi arbejder hver dag for at styrke båndene mellem to kulturer og skabe et bedre samfund for alle.</p>
+
+            <div class="vm-grid">
+                <div class="vm-card">
+                    <div class="vm-card-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Vores Mission</h3>
+                    <p>At fremme integration og gensidig forståelse mellem danskere og somaliere gennem kulturelle arrangementer, dialog og praktisk støtte til foreningens medlemmer.</p>
+                </div>
+                <div class="vm-card">
+                    <div class="vm-card-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Vores Vision</h3>
+                    <p>Et Danmark hvor dansk og somalisk baggrund beriger hinanden. Vi drømmer om et samfund, hvor alle føler sig velkomne, respekterede og har lige muligheder.</p>
+                </div>
+                <div class="vm-card">
+                    <div class="vm-card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Hvem vi hjælper</h3>
+                    <p>Vi tilbyder støtte til nyankomne familier, ungdomsaktiviteter for børn og unge, sproghjælp og rådgivning — alt drevet af frivillige med hjertet på rette sted.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATS BANNER -->
+        <section class="stats-section">
+            <div class="stats-inner">
+                <div class="stat-item">
+                    <h2>10+</h2>
+                    <p>År i tjeneste</p>
+                </div>
+                <div class="stat-item">
+                    <h2>200+</h2>
+                    <p>Aktive medlemmer</p>
+                </div>
+                <div class="stat-item">
+                    <h2>50+</h2>
+                    <p>Arrangementer afholdt</p>
+                </div>
+                <div class="stat-item">
+                    <h2>100%</h2>
+                    <p>Frivilligt drevet</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- HISTORIE / TIDSLINJE -->
+        <section class="historie-section">
+            <div class="historie-inner">
+                <div class="section-label">Vores rejse</div>
+                <h2 class="section-title">Foreningens <span>historie</span></h2>
+                <p class="section-subtitle">Fra en lille gruppe ildsjæle til en anerkendt forening med hundredvis af medlemmer.</p>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-year">2013</div>
+                        <h3>Foreningen stiftes</h3>
+                        <p>En gruppe engagerede somaliere og danskere mødes for første gang med ønsket om at skabe et mødested på tværs af kulturer.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-year">2015</div>
+                        <h3>Første store arrangement</h3>
+                        <p>Vi afholder vores første store kulturfestival med over 150 deltagere, mad fra begge kulturer og musik der forener generationer.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-year">2018</div>
+                        <h3>Ungdomsprogram lanceres</h3>
+                        <p>Vi starter et dedikeret program for børn og unge med lektiehjælp, sport og kulturelle aktiviteter i samarbejde med lokale skoler.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-year">2022</div>
+                        <h3>200 medlemmer</h3>
+                        <p>Foreningen runder 200 aktive medlemmer og udvider sine aktiviteter med månedlige netværksmøder og støtte til nyankomne familier.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-year">I dag</div>
+                        <h3>Fortsat vækst</h3>
+                        <p>Vi fortsætter med at vokse og udvikle os, stadig drevet af frivillige og passion for at bringe mennesker samen på tværs af kulturer.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VÆRDIER -->
+        <section class="vaerdier-section">
+            <div class="section-label">Det vi tror på</div>
+            <h2 class="section-title">Vores <span>værdier</span></h2>
+            <p class="section-subtitle">Disse grundværdier guider alt hvad vi gør som forening.</p>
+
+            <div class="vaerdier-grid">
+                <div class="vaerdi-card">
+                    <span class="vaerdi-emoji">🤝</span>
+                    <h3>Respekt</h3>
+                    <p>Alle mennesker behandles med værdighed uanset baggrund, tro eller kultur.</p>
+                </div>
+                <div class="vaerdi-card">
+                    <span class="vaerdi-emoji">🌍</span>
+                    <h3>Mangfoldighed</h3>
+                    <p>Vi fejrer forskellene og ser dem som en styrke, ikke en barriere.</p>
+                </div>
+                <div class="vaerdi-card">
+                    <span class="vaerdi-emoji">💪</span>
+                    <h3>Fællesskab</h3>
+                    <p>Sammen er vi stærkere. Vi støtter og løfter hinanden frem.</p>
+                </div>
+                <div class="vaerdi-card">
+                    <span class="vaerdi-emoji">📚</span>
+                    <h3>Uddannelse</h3>
+                    <p>Viden og muligheder skal være tilgængelige for alle, unge som gamle.</p>
+                </div>
+                <div class="vaerdi-card">
+                    <span class="vaerdi-emoji">❤️</span>
+                    <h3>Frivillighed</h3>
+                    <p>Alt hvad vi gør sker af hjertet — drevet af passion og omsorg for andre.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Dansk-Somalisk Forening. Alle rettigheder forbeholdes.</p>
+    </footer>
+
+    <!-- Scroll effekt til navbar -->
+    <script>
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+
 </body>
 </html>
