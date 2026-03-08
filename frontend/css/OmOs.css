@@ -1,0 +1,364 @@
+/* ===== OM OS - SPECIFIK STYLING ===== */
+
+/* ── HERO ──────────────────────────────────────────────── */
+.omos-hero {
+    background: linear-gradient(135deg, #1D3E5E 0%, #2E5A88 60%, #3a6fa8 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 94%);
+    padding: 10rem 2.5rem 8rem;
+    color: white;
+    overflow: hidden;
+    position: relative;
+}
+
+.omos-hero::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+    pointer-events: none;
+}
+
+.omos-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 60px;
+    left: -60px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+    pointer-events: none;
+}
+
+.hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4rem;
+}
+
+.hero-text {
+    flex: 1;
+    max-width: 580px;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+}
+
+.omos-hero h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 1.2rem;
+    color: white;
+}
+
+.omos-hero h1 span {
+    color: #a8c8f0;
+}
+
+.omos-hero p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.hero-icon-block {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-icon-circle {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    backdrop-filter: blur(4px);
+}
+
+/* ── FÆLLES SEKTION HJÆLPERE ───────────────────────────── */
+.section-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #2E5A88;
+    margin-bottom: 0.6rem;
+}
+
+.section-title {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800;
+    color: #1a2332;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+}
+
+.section-title span {
+    color: #2E5A88;
+}
+
+.section-subtitle {
+    font-size: 1.05rem;
+    color: #5a6a7e;
+    margin-bottom: 3rem;
+}
+
+/* ── VISION & MISSION ──────────────────────────────────── */
+.vm-section {
+    max-width: 1100px;
+    margin: 6rem auto;
+    padding: 0 2.5rem;
+}
+
+.vm-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2.5rem;
+}
+
+.vm-card {
+    background: white;
+    border: 1px solid #e8edf4;
+    border-radius: 16px;
+    padding: 2.2rem 2rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.vm-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 28px rgba(46, 90, 136, 0.12);
+    border-color: #2E5A88;
+}
+
+.vm-card-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: #eef4fb;
+    color: #2E5A88;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 1.2rem;
+}
+
+.vm-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a2332;
+    margin-bottom: 0.6rem;
+}
+
+.vm-card p {
+    font-size: 0.97rem;
+    color: #5a6a7e;
+    line-height: 1.7;
+}
+
+/* ── HISTORIE / TIDSLINJE ──────────────────────────────── */
+.historie-section {
+    background: #f4f7fb;
+    padding: 6rem 2.5rem;
+}
+
+.historie-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.timeline {
+    position: relative;
+    margin-top: 3rem;
+    padding-left: 2rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, #2E5A88, #a8c8f0);
+    border-radius: 2px;
+}
+
+.timeline-item {
+    position: relative;
+    padding: 0 0 3rem 2.5rem;
+}
+
+.timeline-item:last-child {
+    padding-bottom: 0;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -2rem;
+    top: 0.25rem;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #2E5A88;
+    border: 3px solid white;
+    box-shadow: 0 0 0 3px #2E5A88;
+    transform: translateX(-7px);
+}
+
+.timeline-year {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #2E5A88;
+    margin-bottom: 0.4rem;
+}
+
+.timeline-item h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1a2332;
+    margin-bottom: 0.4rem;
+}
+
+.timeline-item p {
+    font-size: 0.97rem;
+    color: #5a6a7e;
+    line-height: 1.7;
+    max-width: 600px;
+}
+
+/* ── VÆRDIER ───────────────────────────────────────────── */
+.vaerdier-section {
+    max-width: 1100px;
+    margin: 6rem auto;
+    padding: 0 2.5rem;
+}
+
+.vaerdier-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+}
+
+.vaerdi-card {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: white;
+    border: 1px solid #e8edf4;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+}
+
+.vaerdi-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 28px rgba(46, 90, 136, 0.12);
+    border-color: #2E5A88;
+}
+
+.vaerdi-emoji {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.vaerdi-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a2332;
+    margin-bottom: 0.5rem;
+}
+
+.vaerdi-card p {
+    font-size: 0.92rem;
+    color: #5a6a7e;
+    line-height: 1.6;
+}
+
+/* ── STATS BANNER ──────────────────────────────────────── */
+.stats-section {
+    background: linear-gradient(135deg, #1D3E5E 0%, #2E5A88 100%);
+    padding: 5rem 2.5rem;
+    color: white;
+}
+
+.stats-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2rem;
+    text-align: center;
+}
+
+.stat-item h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: white;
+    margin-bottom: 0.4rem;
+}
+
+.stat-item p {
+    font-size: 0.97rem;
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 500;
+}
+
+/* ── FOOTER ────────────────────────────────────────────── */
+.footer {
+    background: #1a2332;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.9rem;
+}
+
+/* ── RESPONSIV ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .hero-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+    }
+
+    .hero-icon-block {
+        display: none;
+    }
+
+    .timeline {
+        padding-left: 1.5rem;
+    }
+
+    .timeline-dot {
+        left: -1.5rem;
+    }
+}

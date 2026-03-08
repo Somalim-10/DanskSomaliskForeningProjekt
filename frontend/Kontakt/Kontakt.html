@@ -20,7 +20,7 @@
     <header class="navbar">
         <div class="nav-logo">
             <a href="../Index/index.html">
-                <img src="https://s3.ca-central-1.amazonaws.com/logojoy/logos/233936619/noBgColor.png" alt="Dansk-Somalisk Forening" />
+                <img src="https://img.sanishtech.com/u/b15c9a34e098cb17103cbdac2d2a25f5.png" alt="Dansk-Somalisk Forening" />
             </a>
         </div>
         <div class="nav-center">
@@ -126,6 +126,18 @@
     <footer class="footer">
         <p>&copy; 2026 Dansk-Somalisk Forening. Alle rettigheder forbeholdes.</p>
     </footer>
+
+    <!-- Scroll effekt til navbar -->
+    <script>
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
 
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
