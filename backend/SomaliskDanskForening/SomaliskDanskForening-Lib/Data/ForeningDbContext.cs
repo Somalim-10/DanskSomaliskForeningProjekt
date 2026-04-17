@@ -13,6 +13,8 @@ namespace SomaliskDanskForening_Lib.Data
         public DbSet<Donation> Donations => Set<Donation>();
         public DbSet<Contact> Contacts => Set<Contact>();
         public DbSet<Event> Events => Set<Event>();
+        // Update: backend/SomaliskDanskForening/SomaliskDanskForening-Lib/Data/ForeningDbContext.cs
+        public DbSet<User> Users => Set<User>();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

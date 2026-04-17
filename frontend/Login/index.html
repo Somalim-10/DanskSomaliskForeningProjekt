@@ -1,18 +1,32 @@
-<!DOCTYPE html>
-<html lang="da">
-<head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Log ind - Somalisk Dansk Forening</title>
-	<link rel="stylesheet" href="../css/style.css" />
-</head>
-<body>
-	<!-- Navbar Component -->
-	<script src="../components/common/Navbar.js"></script>
+<!-- frontend/Login/index.html -->
+<main>
+    <div id="app">
+        <form @submit.prevent="login">
+            <h1>Log ind</h1>
+            
+            <input 
+                v-model="formData.username" 
+                type="text" 
+                placeholder="Brugernavn" 
+                required
+            >
+            
+            <input 
+                v-model="formData.password" 
+                type="password" 
+                placeholder="Adgangskode" 
+                required
+            >
+            
+            <button type="submit">Log ind</button>
+            
+            <p v-if="message" :class="{ success: isSuccess, error: !isSuccess }">
+                {{ message }}
+            </p>
+        </form>
+    </div>
 
-	<main>
-		<h1>Log ind</h1>
-		<p>Her kan du senere bygge login-funktionalitet.</p>
-	</main>
-</body>
-</html>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="login.js"></script>
+</main>

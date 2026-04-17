@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SomaliskDanskForening_Lib.Data;
 
@@ -11,9 +12,11 @@ using SomaliskDanskForening_Lib.Data;
 namespace SomaliskDanskForening_Lib.Migrations
 {
     [DbContext(typeof(ForeningDbContext))]
-    partial class ForeningDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260417165857_AddUserTable")]
+    partial class AddUserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
