@@ -1,4 +1,4 @@
-const baseUrl = "https://localhost:7261/api/Donation";
+const baseUrl = "http://localhost:5271/api/Donation";
 
 Vue.createApp({
   data() {
