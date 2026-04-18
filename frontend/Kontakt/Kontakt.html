@@ -56,7 +56,7 @@
             <div v-else-if="!kontakt.id" class="kontakt-empty">
                 <i class="fas fa-address-card"></i>
                 <p>Ingen kontaktoplysninger tilgængelige endnu.</p>
-                <a href="Add.html" class="kontakt-add-btn">
+                <a v-if="isAdmin" href="Add.html" class="kontakt-add-btn">
                     <i class="fas fa-plus"></i> Tilføj kontaktoplysninger
                 </a>
             </div>
@@ -86,7 +86,7 @@
                         <a :href="`mailto:${kontakt.email}`">{{ kontakt.email }}</a>
                     </div>
                 </div>
-                <a :href="`Edit.html?id=${kontakt.id}`" class="kontakt-edit-btn">
+                <a v-if="isAdmin" :href="`Edit.html?id=${kontakt.id}`" class="kontakt-edit-btn">
                     <i class="fas fa-pen"></i> Rediger kontaktoplysninger
                 </a>
             </div>

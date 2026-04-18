@@ -12,7 +12,7 @@ using SomaliskDanskForening_Lib.Data;
 namespace SomaliskDanskForening_Lib.Migrations
 {
     [DbContext(typeof(ForeningDbContext))]
-    [Migration("20260214184754_InitialCreate")]
+    [Migration("20260417202445_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -111,6 +111,53 @@ namespace SomaliskDanskForening_Lib.Migrations
                             Duration = 2,
                             StartTime = 18,
                             Title = "Netværksmøde med Lokale Foreninger"
+                        });
+                });
+
+            modelBuilder.Entity("SomaliskDanskForening_Lib.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Email = "admin@forening.dk",
+                            IsActive = true,
+                            PasswordHash = "L8mN2oP5qR8sT1uV4wX7yZ0aB3cD6eF9gH2iJ5kL8mN1oP4qR7sT0uV3wX6yZ9aB",
+                            Role = "Admin",
+                            Username = "SomaliskDanskForening"
                         });
                 });
 #pragma warning restore 612, 618

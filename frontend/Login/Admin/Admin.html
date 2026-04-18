@@ -1,0 +1,208 @@
+<!-- frontend/Admin/index.html -->
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Somalisk Dansk Forening</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <!-- Admin Login Check -->
+    <script>
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        if (user.role !== 'Admin') {
+            alert('❌ Du skal være logget ind som admin for at få adgang her!');
+            window.location.href = '../index.html';
+        }
+    </script>
+
+    <div id="app">
+        <!-- Navbar -->
+        <header class="admin-navbar">
+            <div class="admin-header">
+                <h1>🔐 Admin Panel</h1>
+                <div class="user-info">
+                    <span v-if="user">Logget ind som: <strong>{{ user.username }}</strong> ({{ user.role }})</span>
+                    <button @click="logout" class="logout-btn">Log ud</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Admin Navigation Tabs -->
+        <nav class="admin-nav">
+            <button 
+                v-for="tab in tabs" 
+                :key="tab"
+                @click="activeTab = tab"
+                :class="{ active: activeTab === tab }"
+                class="tab-btn"
+            >
+                {{ tab }}
+            </button>
+        </nav>
+
+        <!-- Indhold baseret på aktiv tab -->
+        <main class="admin-content">
+
+            <!-- TAB 1: BRUGERE ADMINISTRATION -->
+            <section v-if="activeTab === 'Brugere'" class="admin-section">
+                <h2>👥 Administrer Brugere</h2>
+                
+                <button @click="showAddUserForm = true" class="add-btn">➕ Opret ny bruger</button>
+
+                <!-- Opret bruger form -->
+                <div v-if="showAddUserForm" class="form-container">
+                    <h3>Opret ny bruger</h3>
+                    <form @submit.prevent="addUser">
+                        <input v-model="newUser.username" type="text" placeholder="Brugernavn" required>
+                        <input v-model="newUser.email" type="email" placeholder="Email" required>
+                        <input v-model="newUser.password" type="password" placeholder="Adgangskode" required>
+                        
+                        <select v-model="newUser.role">
+                            <option value="User">User</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                        
+                        <button type="submit">Opret bruger</button>
+                        <button type="button" @click="showAddUserForm = false">Annuller</button>
+                    </form>
+                </div>
+
+                <!-- Bruger liste -->
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Brugernavn</th>
+                            <th>Email</th>
+                            <th>Rolle</th>
+                            <th>Status</th>
+                            <th>Handlinger</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="user in users" :key="user.id">
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                <select @change="updateUserRole(user.id, $event)" :value="user.role">
+                                    <option value="User">User</option>
+                                    <option value="Admin">Admin</option>
+                                </select>
+                            </td>
+                            <td>
+                                <span :class="user.isActive ? 'status-active' : 'status-inactive'">
+                                    {{ user.isActive ? '✅ Aktiv' : '❌ Inaktiv' }}
+                                </span>
+                            </td>
+                            <td>
+                                <button @click="toggleUserStatus(user.id)" class="toggle-btn">
+                                    {{ user.isActive ? 'Deaktivér' : 'Aktivér' }}
+                                </button>
+                                <button @click="deleteUser(user.id)" class="delete-btn">Slet</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- TAB 2: EVENTS ADMINISTRATION -->
+            <section v-if="activeTab === 'Events'" class="admin-section">
+                <h2>📅 Administrer Events</h2>
+                
+                <button @click="navigateTo('../Event/addEvent.html')" class="add-btn">➕ Opret event</button>
+
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Titel</th>
+                            <th>Dato</th>
+                            <th>Tid</th>
+                            <th>Varighed</th>
+                            <th>Handlinger</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="event in events" :key="event.id">
+                            <td>{{ event.title }}</td>
+                            <td>{{ formatDate(event.date) }}</td>
+                            <td>{{ event.startTime }}:00</td>
+                            <td>{{ event.duration }} timer</td>
+                            <td>
+                                <button @click="editEvent(event.id)" class="edit-btn">✏️ Rediger</button>
+                                <button @click="deleteEvent(event.id)" class="delete-btn">🗑️ Slet</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- TAB 3: DONATIONER -->
+            <section v-if="activeTab === 'Donationer'" class="admin-section">
+                <h2>💰 Donationer & MobilePay</h2>
+                
+                <button @click="navigateTo('../Donation/addDonation.html')" class="add-btn">➕ Opret donation info</button>
+
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Tekst</th>
+                            <th>MobilePay</th>
+                            <th>Handlinger</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="donation in donations" :key="donation.id">
+                            <td>{{ donation.text }}</td>
+                            <td>{{ donation.mobilePay }}</td>
+                            <td>
+                                <button @click="editDonation(donation.id)" class="edit-btn">✏️ Rediger</button>
+                                <button @click="deleteDonation(donation.id)" class="delete-btn">🗑️ Slet</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- TAB 4: KONTAKT INFO -->
+            <section v-if="activeTab === 'Kontakt'" class="admin-section">
+                <h2>📞 Kontaktoplysninger</h2>
+                
+                <button @click="navigateTo('../Kontakt/addKontakt.html')" class="add-btn">➕ Opret kontakt info</button>
+
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Adresse</th>
+                            <th>Telefon</th>
+                            <th>Email</th>
+                            <th>Handlinger</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="contact in contacts" :key="contact.id">
+                            <td>{{ contact.address }}</td>
+                            <td>{{ contact.phone }}</td>
+                            <td>{{ contact.email }}</td>
+                            <td>
+                                <button @click="editContact(contact.id)" class="edit-btn">✏️ Rediger</button>
+                                <button @click="deleteContact(contact.id)" class="delete-btn">🗑️ Slet</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+        </main>
+
+        <p v-if="message" :class="{ success: isSuccess, error: !isSuccess }" class="message">
+            {{ message }}
+        </p>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

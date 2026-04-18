@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SomaliskDanskForening_API.DTO_S;
 using SomaliskDanskForening_Lib.Interfaces;
 using SomaliskDanskForening_Lib.Models;
@@ -36,6 +37,7 @@ namespace SomaliskDanskForening_API.Controllers
         }
 
         [HttpPost] 
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<Event> Post([FromBody] EventsDTO events)
@@ -56,6 +58,7 @@ namespace SomaliskDanskForening_API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<Event> Put(int id, [FromBody] EventsDTO events)
@@ -78,6 +81,7 @@ namespace SomaliskDanskForening_API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<Event> Delete(int id)
