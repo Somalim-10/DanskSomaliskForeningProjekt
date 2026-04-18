@@ -9,6 +9,15 @@
     <link rel="stylesheet" href="admin.css">
 </head>
 <body>
+    <!-- Admin Login Check -->
+    <script>
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        if (user.role !== 'Admin') {
+            alert('❌ Du skal være logget ind som admin for at få adgang her!');
+            window.location.href = '../index.html';
+        }
+    </script>
+
     <div id="app">
         <!-- Navbar -->
         <header class="admin-navbar">

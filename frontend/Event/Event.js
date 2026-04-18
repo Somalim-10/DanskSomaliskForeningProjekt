@@ -1,14 +1,26 @@
-const baseUrl = "http://localhost:5271/api/Event";
+const baseUrl = "https://localhost:7261/api/Event";
+
+// Sæt Authorization header hvis token findes
+const token = localStorage.getItem('token');
+if (token) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
 
 Vue.createApp({
   data() {
     return {
       items: [],
-      message: ""
+      message: "",
+      isAdmin: false
     };
   },
 
   methods: {
+    checkAdminStatus() {
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      this.isAdmin = user.role === 'Admin';
+    },
+
     async getAll() {
       try {
         const response = await axios.get(baseUrl);
@@ -68,6 +80,7 @@ Vue.createApp({
   },
 
   mounted() {
+    this.checkAdminStatus();
     this.getAll();
   }
 }).mount("#app");

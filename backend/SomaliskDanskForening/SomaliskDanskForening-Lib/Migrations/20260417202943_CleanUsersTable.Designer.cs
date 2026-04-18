@@ -12,8 +12,8 @@ using SomaliskDanskForening_Lib.Data;
 namespace SomaliskDanskForening_Lib.Migrations
 {
     [DbContext(typeof(ForeningDbContext))]
-    [Migration("20260417165857_AddUserTable")]
-    partial class AddUserTable
+    [Migration("20260417202943_CleanUsersTable")]
+    partial class CleanUsersTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

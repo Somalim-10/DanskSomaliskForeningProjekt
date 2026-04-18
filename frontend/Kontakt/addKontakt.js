@@ -1,4 +1,10 @@
-const baseUrl = "http://localhost:5271/api/Contact";
+const baseUrl = "https://localhost:7261/api/Contact";
+
+// Sæt Authorization header hvis token findes
+const token = localStorage.getItem('token');
+if (token) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
 
 Vue.createApp({
   data() {

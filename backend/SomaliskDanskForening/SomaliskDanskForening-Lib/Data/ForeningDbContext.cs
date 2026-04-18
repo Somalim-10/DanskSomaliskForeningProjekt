@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SomaliskDanskForening_Lib.Models;
+using SomaliskDanskForening_Lib.Services;
 using System;
 
 namespace SomaliskDanskForening_Lib.Data
@@ -13,7 +14,6 @@ namespace SomaliskDanskForening_Lib.Data
         public DbSet<Donation> Donations => Set<Donation>();
         public DbSet<Contact> Contacts => Set<Contact>();
         public DbSet<Event> Events => Set<Event>();
-        // Update: backend/SomaliskDanskForening/SomaliskDanskForening-Lib/Data/ForeningDbContext.cs
         public DbSet<User> Users => Set<User>();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -28,6 +28,7 @@ namespace SomaliskDanskForening_Lib.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // Kun Event seed — INGEN User seed
             modelBuilder.Entity<Event>().HasData(
                 new Event
                 {
@@ -38,8 +39,6 @@ namespace SomaliskDanskForening_Lib.Data
                     Description = "Mød repræsentanter fra lokale danske foreninger og styrk samarbejdet.",
                     StartTime = 18
                 }
-         
-
             );
         }
     }

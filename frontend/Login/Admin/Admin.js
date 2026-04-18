@@ -1,5 +1,5 @@
 // frontend/Admin/admin.js
-const baseUrl = "http://localhost:5271/api";
+const baseUrl = "https://localhost:7261/api";
 
 Vue.createApp({
     data() {

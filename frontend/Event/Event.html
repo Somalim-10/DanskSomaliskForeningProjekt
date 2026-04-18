@@ -24,34 +24,34 @@
     <script src="../components/common/Navbar.js"></script>
 
     <main>
-        <!-- HERO SEKTION -->
-        <section class="event-hero">
-            <div class="hero-inner">
-                <div class="hero-text">
-                    <span class="hero-badge">Events</span>
-                    <h1>Kommende<br><span>arrangementer</span></h1>
-                    <p>Bliv en del af fællesskabet og deltag i vores arrangementer. Fra kulturelle fejringer til sociale sammenkomster — der er noget for alle.</p>
-                    <p>Alle events er åbne for hele foreningen og nye ansigter er altid velkomne.</p>
-                    <a href="Add.html" class="hero-cta">
-                        <i class="fas fa-plus"></i> Tilføj nyt event
-                    </a>
-                </div>
-                <div class="hero-icon-block">
-                    <div class="hero-icon-circle">
-                        <i class="fas fa-calendar-star" style="color: rgba(255,255,255,0.9);"></i>
+        <!-- VUE APP -->
+        <div id="app">
+            <!-- HERO SEKTION -->
+            <section class="event-hero">
+                <div class="hero-inner">
+                    <div class="hero-text">
+                        <span class="hero-badge">Events</span>
+                        <h1>Kommende<br><span>arrangementer</span></h1>
+                        <p>Bliv en del af fællesskabet og deltag i vores arrangementer. Fra kulturelle fejringer til sociale sammenkomster — der er noget for alle.</p>
+                        <p>Alle events er åbne for hele foreningen og nye ansigter er altid velkomne.</p>
+                        <a v-if="isAdmin" href="Add.html" class="hero-cta">
+                            <i class="fas fa-plus"></i> Tilføj nyt event
+                        </a>
+                    </div>
+                    <div class="hero-icon-block">
+                        <div class="hero-icon-circle">
+                            <i class="fas fa-calendar-star" style="color: rgba(255,255,255,0.9);"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- EVENTS SEKTION -->
-        <section class="events-section">
-            <div class="section-label">Alle arrangementer</div>
-            <h2 class="section-title">Vores <span>events</span></h2>
-            <p class="section-subtitle">Find og udforsk kommende og tidligere arrangementer fra foreningen.</p>
+            <!-- EVENTS SEKTION -->
+            <section class="events-section">
+                <div class="section-label">Alle arrangementer</div>
+                <h2 class="section-title">Vores <span>events</span></h2>
+                <p class="section-subtitle">Find og udforsk kommende og tidligere arrangementer fra foreningen.</p>
 
-            <!-- VUE APP -->
-            <div id="app">
                 <div class="event-container">
 
                     <!-- Værktøjslinje -->
@@ -85,7 +85,7 @@
                     <div v-else-if="items.length === 0" class="empty-state">
                         <i class="fas fa-calendar-times"></i>
                         <p>Ingen events i øjeblikket</p>
-                        <a href="Add.html" class="empty-cta">
+                        <a v-if="isAdmin" href="Add.html" class="empty-cta">
                             <i class="fas fa-plus"></i> Tilføj det første event
                         </a>
                     </div>
@@ -116,7 +116,7 @@
                                 <p class="event-description">{{ event.description }}</p>
 
                                 <!-- Handlingsknapper -->
-                                <div class="event-actions">
+                                <div v-if="isAdmin" class="event-actions">
                                     <button class="action-btn edit-btn" @click="editEvent(event.id)">
                                         <i class="fas fa-edit"></i> Rediger
                                     </button>
@@ -130,7 +130,8 @@
 
                 </div>
             </div>
-        </section>
+            </section>
+        </div>
     </main>
 
     <!-- FOOTER -->

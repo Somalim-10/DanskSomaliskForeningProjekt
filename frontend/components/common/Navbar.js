@@ -1,16 +1,30 @@
 class Navbar {
   constructor() {
     this.isScrolled = false;
+    this.isAdmin = false;
     this.init();
   }
 
   init() {
+    this.checkAdminStatus();
     this.createNavbar();
     this.addScrollListener();
     this.setActiveLink();
+    this.addLogoutListener();
+  }
+
+  checkAdminStatus() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    this.isAdmin = user.role === 'Admin';
   }
 
   createNavbar() {
+    const logoutHTML = this.isAdmin ? `
+      <div class="nav-right">
+        <button id="logoutBtn" class="logout-btn">Logud</button>
+      </div>
+    ` : '';
+
     const navbarHTML = `
       <header class="navbar">
         <div class="nav-logo">
@@ -27,11 +41,23 @@ class Navbar {
             <li class="nav-item"><a href="../OmOs/OmOs.html">Om os</a></li>
           </ul>
         </div>
+        ${logoutHTML}
       </header>
     `;
 
     // Sæt navbar på siden
     document.body.insertAdjacentHTML('afterbegin', navbarHTML);
+  }
+
+  addLogoutListener() {
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        window.location.href = '../Index/index.html';
+      });
+    }
   }
 
   addScrollListener() {

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SomaliskDanskForening_API.DTO_S;
 using SomaliskDanskForening_Lib.Interfaces;
@@ -38,6 +39,7 @@ namespace SomaliskDanskForening_API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<Contact> Post([FromBody] ContactDTO contact)
@@ -54,6 +56,7 @@ namespace SomaliskDanskForening_API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -74,6 +77,7 @@ namespace SomaliskDanskForening_API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<Contact> Delete(int id)
