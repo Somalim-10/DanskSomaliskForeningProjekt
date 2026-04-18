@@ -1,5 +1,6 @@
 // frontend/Admin/admin.js
-const baseUrl = "https://localhost:7261/api";
+const BASE_URL = "https://dansksomaliskforeningprojekt-production.up.railway.app";
+const baseUrl = `${BASE_URL}/api`;
 
 Vue.createApp({
     data() {

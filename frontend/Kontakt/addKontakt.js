@@ -1,4 +1,5 @@
-const baseUrl = "https://localhost:7261/api/Contact";
+const BASE_URL = "https://dansksomaliskforeningprojekt-production.up.railway.app";
+const baseUrl = `${BASE_URL}/api/Contact`;
 
 // Sæt Authorization header hvis token findes
 const token = localStorage.getItem('token');

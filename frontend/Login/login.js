@@ -1,5 +1,6 @@
 // frontend/Login/login.js
-const baseUrl = "https://localhost:7261/api/Auth";
+const BASE_URL = "https://dansksomaliskforeningprojekt-production.up.railway.app";
+const baseUrl = `${BASE_URL}/api/Auth`;
 
 Vue.createApp({
     data() {
