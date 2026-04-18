@@ -1,7 +1,16 @@
 {
   "build": {
     "builder": "NIXPACKS",
-    "buildCommand": "dotnet restore backend/SomaliskDanskForening/SomaliskDanskForening.sln && dotnet publish backend/SomaliskDanskForening/SomaliskDanskForening-API/SomaliskDanskForening-API.csproj -c Release -o out"
+    "nixpacksPlan": {
+      "phases": {
+        "install": {
+          "cmds": ["dotnet restore backend/SomaliskDanskForening/SomaliskDanskForening.sln"]
+        },
+        "build": {
+          "cmds": ["dotnet publish backend/SomaliskDanskForening/SomaliskDanskForening-API/SomaliskDanskForening-API.csproj -c Release -o out"]
+        }
+      }
+    }
   },
   "deploy": {
     "startCommand": "dotnet out/SomaliskDanskForening-API.dll"
