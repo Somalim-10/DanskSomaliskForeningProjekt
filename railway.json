@@ -1,21 +1,6 @@
 {
   "build": {
-    "builder": "NIXPACKS",
-    "nixpacksPlan": {
-      "phases": {
-        "setup": {
-          "nixPkgs": ["dotnet-sdk_9"]
-        },
-        "install": {
-          "cmds": ["dotnet restore backend/SomaliskDanskForening/SomaliskDanskForening.sln"]
-        },
-        "build": {
-          "cmds": ["dotnet publish backend/SomaliskDanskForening/SomaliskDanskForening-API/SomaliskDanskForening-API.csproj -c Release -o out"]
-        }
-      }
-    }
-  },
-  "deploy": {
-    "startCommand": "dotnet out/SomaliskDanskForening-API.dll"
+    "builder": "DOCKERFILE",
+    "dockerfilePath": "Dockerfile"
   }
 }
