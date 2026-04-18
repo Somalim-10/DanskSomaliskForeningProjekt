@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<ForeningDbContext>(options =>
-    options.UseSqlServer(connectionString, b =>
+    options.UseNpgsql(connectionString, b =>
         b.MigrationsAssembly("SomaliskDanskForening-Lib")));
 
 builder.Services.AddScoped<IEventRepo, EventRepositoryDB>();
@@ -22,10 +22,9 @@ builder.Services.AddScoped<IContactRepo, ContactRepositoryDB>();
 
 builder.Services.AddSwaggerGen();
 
-// JWT Authentication
-var jwtKey = "your-super-secret-key-that-is-at-least-32-characters-long-for-security";
-var jwtIssuer = "SomaliskDanskForening";
-var jwtAudience = "SomaliskDanskForeningUsers";
+var jwtKey = builder.Configuration["Jwt:Key"];
+var jwtIssuer = builder.Configuration["Jwt:Issuer"];
+var jwtAudience = builder.Configuration["Jwt:Audience"];
 
 builder.Services.AddAuthentication(options =>
 {
@@ -58,7 +57,6 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Build ALTID efter alle services er registreret
 var app = builder.Build();
 
 app.UseCors();

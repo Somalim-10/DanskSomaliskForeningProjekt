@@ -1,0 +1,9 @@
+{
+  "build": {
+    "builder": "NIXPACKS",
+    "buildCommand": "dotnet publish backend/SomaliskDanskForening/SomaliskDanskForening-API/SomaliskDanskForening-API.csproj -c Release -o out"
+  },
+  "deploy": {
+    "startCommand": "dotnet out/SomaliskDanskForening-API.dll"
+  }
+}
