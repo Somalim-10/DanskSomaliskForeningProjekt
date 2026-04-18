@@ -2,7 +2,6 @@
   "build": {
     "builder": "NIXPACKS",
     "nixpacksPlan": {
-      "providers": ["dotnet"],
       "phases": {
         "setup": {
           "nixPkgs": ["dotnet-sdk_9"]
