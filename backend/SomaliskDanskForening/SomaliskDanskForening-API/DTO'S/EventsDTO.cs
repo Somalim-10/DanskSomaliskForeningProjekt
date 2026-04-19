@@ -12,6 +12,6 @@ namespace SomaliskDanskForening_API.DTO_S
         public string Description { get; set; } = string.Empty;
 
         // Korrekt opkald til Event-konstruktøren (id, title, date, durationHours, description, startTime)
-        public Event ToEventDTO() => new Event(0, Title, Date, duration, Description, startTime);
+        public Event ToEventDTO() => new Event(0, Title, DateTime.SpecifyKind(Date, DateTimeKind.Utc), duration, Description, startTime);
     }
 }
