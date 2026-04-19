@@ -25,9 +25,9 @@ namespace SomaliskDanskForening_API.Controllers
 
         private string GenerateJwtToken(User user)
         {
-            var jwtKey = "your-super-secret-key-that-is-at-least-32-characters-long-for-security";
-            var jwtIssuer = "SomaliskDanskForening";
-            var jwtAudience = "SomaliskDanskForeningUsers";
+            var jwtKey = _configuration["Jwt:Key"];
+            var jwtIssuer = _configuration["Jwt:Issuer"];
+            var jwtAudience = _configuration["Jwt:Audience"];
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
