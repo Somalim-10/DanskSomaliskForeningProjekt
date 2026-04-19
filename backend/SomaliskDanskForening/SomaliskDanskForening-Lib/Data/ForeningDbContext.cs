@@ -2,6 +2,7 @@
 using SomaliskDanskForening_Lib.Models;
 using SomaliskDanskForening_Lib.Services;
 using System;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 namespace SomaliskDanskForening_Lib.Data
 {
@@ -20,7 +21,7 @@ namespace SomaliskDanskForening_Lib.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(ConnStr);
+                optionsBuilder.UseNpgsql(ConnStr);
             }
         }
 
@@ -30,16 +31,16 @@ namespace SomaliskDanskForening_Lib.Data
 
             // Kun Event seed — INGEN User seed
             modelBuilder.Entity<Event>().HasData(
-                new Event
-                {
-                    Id = 1,
-                    Title = "Netværksmøde med Lokale Foreninger",
-                    Date = new DateTime(2025, 1, 18),
-                    Duration = 2,
-                    Description = "Mød repræsentanter fra lokale danske foreninger og styrk samarbejdet.",
-                    StartTime = 18
-                }
-            );
+     new Event
+     {
+         Id = 1,
+         Title = "Netværksmøde med Lokale Foreninger",
+         Date = new DateTime(2025, 1, 18, 0, 0, 0, DateTimeKind.Utc), // tilføj DateTimeKind.Utc
+         Duration = 2,
+         Description = "Mød repræsentanter fra lokale danske foreninger og styrk samarbejdet.",
+         StartTime = 18
+     }
+ );
         }
     }
 }
