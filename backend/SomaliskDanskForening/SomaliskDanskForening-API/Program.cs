@@ -72,5 +72,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.MapGet("/genhash", () =>
+    SomaliskDanskForening_Lib.Services.AuthService.HashPassword("Soomaaliiyoo"));
 app.Run();
