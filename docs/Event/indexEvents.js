@@ -1,7 +1,6 @@
 const BASE_URL = "https://dansksomaliskforeningprojekt-production.up.railway.app";
 const baseUrl = `${BASE_URL}/api/Event`;
 
-// Sæt Authorization header hvis token findes
 const token = localStorage.getItem('token');
 if (token) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -11,7 +10,8 @@ Vue.createApp({
   data() {
     return {
       items: [],
-      message: ""
+      message: "",
+      eventImages: JSON.parse(localStorage.getItem('eventImages') || '{}')
     };
   },
 
@@ -19,8 +19,6 @@ Vue.createApp({
     upcomingEvents() {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-
-      // Find de næste 3 kommende events (fra i dag og frem)
       return this.items
         .filter(event => {
           if (!event.date) return false;
@@ -33,14 +31,8 @@ Vue.createApp({
         .sort((a, b) => {
           const aDate = new Date(a.date);
           const bDate = new Date(b.date);
-
-          if (Number.isFinite(a.startTime)) {
-            aDate.setHours(a.startTime, 0, 0, 0);
-          }
-          if (Number.isFinite(b.startTime)) {
-            bDate.setHours(b.startTime, 0, 0, 0);
-          }
-
+          if (Number.isFinite(a.startTime)) aDate.setHours(a.startTime, 0, 0, 0);
+          if (Number.isFinite(b.startTime)) bDate.setHours(b.startTime, 0, 0, 0);
           return aDate - bDate;
         })
         .slice(0, 3);
@@ -52,7 +44,6 @@ Vue.createApp({
       try {
         const response = await axios.get(baseUrl);
         this.items = response.data;
-        console.log("Hentede events til forsiden:", this.items);
       } catch (error) {
         console.error("Fejl ved hentning af events:", error);
         this.message = "Kunne ikke hente events.";
@@ -60,17 +51,18 @@ Vue.createApp({
     },
 
     formatDay(dateString) {
-      const date = new Date(dateString);
-      return date.getDate();
+      return new Date(dateString).getDate();
     },
 
     formatMonth(dateString) {
-      const date = new Date(dateString);
-      const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAJ', 'JUN', 'JUL', 'AUG', 'SEP', 'OKT', 'NOV', 'DEC'];
-      return months[date.getMonth()];
+      const months = ['JAN','FEB','MAR','APR','MAJ','JUN','JUL','AUG','SEP','OKT','NOV','DEC'];
+      return months[new Date(dateString).getMonth()];
+    },
+
+    getImage(eventId) {
+      return this.eventImages[eventId] || null;
     }
   },
-  
 
   mounted() {
     this.getAll();

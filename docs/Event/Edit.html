@@ -76,6 +76,22 @@
                 <label for="description">Beskrivelse</label>
                 <textarea id="description" v-model="formData.description" placeholder="Kort beskrivelse af arrangementet..."></textarea>
             </div>
+            <div class="form-group">
+  <label for="imageUrl">Billede URL (valgfrit)</label>
+  <div class="image-input-wrap">
+    <input 
+      id="imageUrl" 
+      v-model="formData.imageUrl" 
+      type="text" 
+      placeholder="Indsæt link til billede, fx https://..." 
+      @input="imageError = false"
+    />
+    <div v-if="formData.imageUrl" class="image-preview">
+      <img :src="formData.imageUrl" alt="Forhåndsvisning" @error="imageError = true" @load="imageError = false" />
+      <p v-if="imageError" class="preview-error"><i class="fas fa-exclamation-circle"></i> Ugyldigt billed-link</p>
+    </div>
+  </div>
+</div>
 
         </div>
 

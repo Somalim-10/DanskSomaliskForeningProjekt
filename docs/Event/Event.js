@@ -12,7 +12,8 @@ Vue.createApp({
     return {
       items: [],
       message: "",
-      isAdmin: false
+      isAdmin: false,
+      eventImages: JSON.parse(localStorage.getItem('eventImages') || '{}')
     };
   },
 
@@ -55,17 +56,6 @@ Vue.createApp({
       this.message = "🔤 Sorteret efter titel";
     },
 
-    // Hjælpemetoder til datovisning
-    formatDay(dateString) {
-      const date = new Date(dateString);
-      return date.getDate().toString().padStart(2, '0');
-    },
-
-    formatMonth(dateString) {
-      const date = new Date(dateString);
-      return date.toLocaleDateString('da-DK', { month: 'short' }).replace('.', '');
-    },
-
     formatDate(dateString) {
       const date = new Date(dateString);
       return date.toLocaleDateString('da-DK', {
@@ -75,9 +65,27 @@ Vue.createApp({
       });
     },
 
+    formatBadgeDate(dateString) {
+      const date = new Date(dateString);
+      if (Number.isNaN(date.getTime())) {
+        return "";
+      }
+      const day = date.getDate();
+      const month = date
+        .toLocaleDateString('da-DK', { month: 'short' })
+        .replace('.', '')
+        .toUpperCase();
+      const year = date.getFullYear();
+      return `${day} ${month} ${year}`;
+    },
+
+    getImage(eventId) {
+      return this.eventImages[eventId] || null;
+    },
+
     editEvent(id) {
       window.location.href = `Edit.html?id=${id}`;
-    }
+    },
   },
 
   mounted() {
