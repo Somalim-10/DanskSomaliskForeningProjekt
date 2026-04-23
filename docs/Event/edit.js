@@ -16,11 +16,13 @@ Vue.createApp({
         date: "",
         startTime: 12,
         duration: 2,
-        description: ""
+        description: "",
+        imageUrl: ""
       },
       message: "",
       isSuccess: false,
-      isLoading: true
+      isLoading: true,
+      imageError: false
     };
   },
 
@@ -51,8 +53,11 @@ Vue.createApp({
           date: formattedDate,
           startTime: event.startTime,
           duration: event.duration,
-          description: event.description
+          description: event.description,
+          imageUrl: ""
         };
+        const images = JSON.parse(localStorage.getItem('eventImages') || '{}');
+        this.formData.imageUrl = images[this.eventId] || "";
         
         this.isLoading = false;
         
@@ -66,6 +71,15 @@ Vue.createApp({
     async updateItem() {
       try {
         await axios.put(`${baseUrl}/${this.eventId}`, this.formData);
+
+        const images = JSON.parse(localStorage.getItem('eventImages') || '{}');
+        if (this.formData.imageUrl) {
+          images[this.eventId] = this.formData.imageUrl;
+        } else {
+          delete images[this.eventId];
+        }
+        localStorage.setItem('eventImages', JSON.stringify(images));
+
         this.message = "✅ Event opdateret succesfuldt! Sender dig tilbage...";
         this.isSuccess = true;
         

@@ -83,9 +83,16 @@
                     <!-- Events Grid -->
                     <div v-else class="services-grid">
                         <div v-for="event in upcomingEvents" :key="event.id" class="service-card">
-                            <div class="event-date-badge">
-                                <span class="date-day">{{ formatDay(event.date) }}</span>
-                                <span class="date-month">{{ formatMonth(event.date) }}</span>
+                            <div class="event-media">
+                                <img v-if="getImage(event.id)" :src="getImage(event.id)" :alt="event.title" class="event-img" />
+                                <div v-else class="event-img-placeholder">
+                                    <i class="fas fa-image"></i>
+                                    <span>Intet billede</span>
+                                </div>
+                                <div class="event-date-badge">
+                                    <span class="date-day">{{ formatDay(event.date) }}</span>
+                                    <span class="date-month">{{ formatMonth(event.date) }}</span>
+                                </div>
                             </div>
                             <h3>{{ event.title }}</h3>
                             <div class="event-time">

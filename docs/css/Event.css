@@ -234,70 +234,78 @@
 /* ── EVENT-KORT ────────────────────────────────────────── */
 .event-card {
     background: white;
-    border-radius: 20px;
+    border-radius: 24px;
     overflow: hidden;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 12px 28px rgba(29, 62, 94, 0.12);
     transition: var(--transition);
     display: flex;
     flex-direction: column;
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    border: 1px solid #e4eaf1;
 }
 
 .event-card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-md);
-    border-color: rgba(46, 90, 136, 0.25);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(29, 62, 94, 0.16);
+    border-color: rgba(46, 90, 136, 0.2);
 }
 
-/* Dato-banner øverst i kortet */
-.event-date-badge {
-    background: linear-gradient(135deg, #1D3E5E 0%, #2E5A88 100%);
-    color: white;
-    padding: 1.6rem 1.5rem;
-    text-align: center;
+.event-media {
     position: relative;
-    overflow: hidden;
+    height: 200px;
+    background: #e6eef7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.event-date-badge::after {
-    content: '';
+.event-date-pill {
     position: absolute;
-    top: -20px;
-    right: -20px;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.07);
-    pointer-events: none;
-}
-
-.event-date-badge .day {
-    display: block;
-    font-size: 2.5rem;
-    line-height: 1;
-    font-weight: 800;
-}
-
-.event-date-badge .month {
-    display: block;
-    font-size: 0.85rem;
+    top: 14px;
+    left: 14px;
+    background: #1d3e5e;
+    color: white;
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    letter-spacing: 2.5px;
-    opacity: 0.85;
-    margin-top: 0.3rem;
+    box-shadow: 0 8px 18px rgba(29, 62, 94, 0.25);
+}
+
+.event-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.event-img-placeholder {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #8b98ab;
+    gap: 0.4rem;
     font-weight: 600;
+}
+
+.event-img-placeholder i {
+    font-size: 1.7rem;
+    opacity: 0.85;
 }
 
 /* Indhold */
 .event-content {
-    padding: 1.8rem;
+    padding: 1.6rem 1.7rem 1.8rem;
     flex: 1;
     display: flex;
     flex-direction: column;
 }
 
 .event-title {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 700;
     margin-bottom: 0.9rem;
     color: var(--text-dark);
@@ -307,47 +315,48 @@
 .event-meta {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.5rem;
     margin-bottom: 1.1rem;
 }
 
 .event-time,
 .event-full-date {
-    color: var(--primary);
+    color: #1d3e5e;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
 
 .event-full-date {
-    color: #888;
+    color: #6b7788;
     font-weight: 500;
 }
 
 .event-description {
-    color: #666;
-    line-height: 1.65;
-    margin-bottom: 1.5rem;
+    color: #5b6675;
+    line-height: 1.6;
+    margin-bottom: 1.4rem;
     flex: 1;
-    font-size: 0.97rem;
+    font-size: 0.96rem;
 }
 
 /* Handlingsknapper */
 .event-actions {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 0.75rem;
     margin-top: auto;
-    border-top: 1px solid #f0f0f0;
-    padding-top: 1.2rem;
+    border-top: 1px solid #eef2f6;
+    padding-top: 1.1rem;
 }
 
 .action-btn {
     flex: 1;
-    padding: 0.65rem 0;
-    border: none;
-    border-radius: 10px;
+    padding: 0.7rem 0.9rem;
+    border: 1.5px solid #d6dde6;
+    border-radius: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
@@ -355,27 +364,22 @@
     align-items: center;
     justify-content: center;
     gap: 0.45rem;
-    font-size: 0.9rem;
+    font-size: 0.92rem;
+    background: white;
+    color: #1a2332;
 }
 
-.edit-btn {
-    background: var(--accent);
-    color: var(--primary-dark);
+.action-btn:hover {
+    border-color: rgba(46, 90, 136, 0.5);
+    box-shadow: 0 8px 16px rgba(29, 62, 94, 0.12);
 }
 
-.edit-btn:hover {
-    background: var(--primary);
-    color: white;
+.action-btn i {
+    color: #1d3e5e;
 }
 
-.delete-btn {
-    background: #fff0f0;
-    color: #c00;
-}
-
-.delete-btn:hover {
-    background: #c00;
-    color: white;
+.delete-btn i {
+    color: #b00020;
 }
 
 /* ── STATES (loading / fejl / tom) ─────────────────────── */
@@ -420,6 +424,7 @@
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
+
 
 /* ── RESPONSIVT ────────────────────────────────────────── */
 @media (max-width: 900px) {

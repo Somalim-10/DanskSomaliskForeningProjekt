@@ -93,11 +93,13 @@
                     <!-- Grid med events -->
                     <div v-else class="events-grid">
                         <div v-for="event in items" :key="event.id" class="event-card">
-
-                            <!-- Dato badge -->
-                            <div class="event-date-badge">
-                                <span class="day">{{ formatDay(event.date) }}</span>
-                                <span class="month">{{ formatMonth(event.date) }}</span>
+                            <div class="event-media">
+                                <span class="event-date-pill">{{ formatBadgeDate(event.date) }}</span>
+                                <img v-if="getImage(event.id)" :src="getImage(event.id)" :alt="event.title" class="event-img" />
+                                <div v-else class="event-img-placeholder">
+                                    <i class="fas fa-image"></i>
+                                    <span>Intet billede</span>
+                                </div>
                             </div>
 
                             <!-- Indhold -->
