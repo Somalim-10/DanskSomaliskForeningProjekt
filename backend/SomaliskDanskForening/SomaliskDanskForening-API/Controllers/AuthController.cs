@@ -85,8 +85,9 @@ namespace SomaliskDanskForening_API.Controllers
             if (hasUsers)
             {
                 // Efter første bruger: kræv adminKey
-                if (string.IsNullOrEmpty(request.AdminKey) || request.AdminKey != "admin-secret-key")
-                    return Forbid("❌ Kun admins kan registrere nye brugere");
+                var adminKey = _configuration["Admin:RegistrationKey"];
+                if (string.IsNullOrEmpty(adminKey) || request.AdminKey != adminKey)
+                    return StatusCode(StatusCodes.Status403Forbidden, "❌ Kun admins kan registrere nye brugere");
             }
 
             if (_context.Users.Any(u => u.Username == request.Username))

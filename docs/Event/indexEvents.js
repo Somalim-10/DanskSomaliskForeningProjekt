@@ -1,4 +1,6 @@
-const BASE_URL = "https://dansksomaliskforeningprojekt-production.up.railway.app";
+const BASE_URL = (location.hostname === "localhost" || location.hostname === "127.0.0.1")
+    ? "http://localhost:5271"
+    : "https://dansksomaliskforeningprojekt-production.up.railway.app";
 const baseUrl = `${BASE_URL}/api/Event`;
 
 const token = localStorage.getItem('token');

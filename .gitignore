@@ -1,0 +1,23 @@
+# Build-output
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+TestOut/
+*.user
+*.suo
+.vs/
+
+# .NET
+project.lock.json
+artifacts/
+
+# Hemmeligheder / lokal konfiguration (commit ALDRIG)
+appsettings.Development.json
+appsettings.Local.json
+*.env
+.env
+secrets.json
+
+# OS
+.DS_Store
+Thumbs.db

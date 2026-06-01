@@ -1,0 +1,4 @@
+// Bruges af alle JS filer - auto-detekterer om vi korer lokalt eller i produktion
+window.API_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:5000'
+    : 'https://dansksomaliskforeningprojekt-production.up.railway.app';
