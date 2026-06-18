@@ -32,9 +32,20 @@ namespace SomaliskDanskForening_Test.Selenium
             var options = new ChromeOptions();
             if (Environment.GetEnvironmentVariable("SDF_HEADLESS") == "1")
                 options.AddArgument("--headless=new");
+            
+            // Tilføj fullscreen ved opstart
+            options.AddArgument("--start-maximized");
+            options.AddArgument("--no-first-run");
+            options.AddArgument("--no-default-browser-check");
+            
             options.AddArgument("--no-sandbox");
             options.AddArgument("--disable-dev-shm-usage");
+            
             _sharedDriver = new ChromeDriver(options);
+            
+            // Sikr at vinduet er maksimeret
+            _sharedDriver.Manage().Window.Maximize();
+            
             _sharedDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             _sharedDriver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
         }
