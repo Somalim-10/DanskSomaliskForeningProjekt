@@ -23,6 +23,10 @@ builder.Services.AddScoped<IContactRepo, ContactRepositoryDB>();
 builder.Services.AddSwaggerGen();
 
 var jwtKey = builder.Configuration["Jwt:Key"];
+if (string.IsNullOrWhiteSpace(jwtKey))
+    throw new InvalidOperationException(
+        "Jwt:Key mangler. Sæt miljøvariablen 'Jwt__Key' på Railway, eller kør " +
+        "'dotnet user-secrets set \"Jwt:Key\" \"<din-nøgle>\"' lokalt.");
 var jwtIssuer = builder.Configuration["Jwt:Issuer"];
 var jwtAudience = builder.Configuration["Jwt:Audience"];
 
@@ -72,6 +76,4 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapGet("/genhash", () =>
-    SomaliskDanskForening_Lib.Services.AuthService.HashPassword("Soomaaliiyoo"));
 app.Run();
