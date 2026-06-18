@@ -3,7 +3,7 @@ using OpenQA.Selenium.Support.UI;
 
 namespace SomaliskDanskForening_Test.Selenium
 {
-    /// <summary>
+    /// <summaryyy>
     /// Integreret admin-test der logger ind en gang og koerer handlinger paa
     /// Event-, Kontakt- og Donation-siderne. Siderne bruger separate Add/Edit-sider
     /// (ikke modaler), og sletning sker via en browser-confirm()-dialog.
