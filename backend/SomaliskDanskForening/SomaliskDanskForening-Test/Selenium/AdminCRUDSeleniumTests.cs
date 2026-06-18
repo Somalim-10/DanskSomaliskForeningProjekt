@@ -4,23 +4,20 @@ using OpenQA.Selenium.Support.UI;
 namespace SomaliskDanskForening_Test.Selenium
 {
     /// <summary>
-    /// Integreret test der logger ind én gang og kører CRUD-operationer (Oprette, Redigere, Slette)
-    /// på alle admin-sider: Kontakt, Event og Donation.
-    /// 
-    /// Testen kører langsomt med synlige pauser så du kan følge med i hvad der sker.
-    /// Hvis en knap fører til en anden side, testes navigation og der går vi tilbage.
+    /// Integreret admin-test der logger ind en gang og koerer handlinger paa
+    /// Event-, Kontakt- og Donation-siderne. Siderne bruger separate Add/Edit-sider
+    /// (ikke modaler), og sletning sker via en browser-confirm()-dialog.
     /// </summary>
     [TestClass]
     [DoNotParallelize]
     public class AdminCRUDSeleniumTests : SeleniumBase
     {
-        private const int SLOW_PAUSE_MS = 2000;  // 2 sekunder pause mellem actions
+        private const int SLOW_PAUSE_MS = 600;
         private const int WAIT_TIMEOUT_SEC = 20;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
-            // Login så én gang for hele test-klassen
             Console.WriteLine("Logger ind som admin...");
             var testInstance = new AdminCRUDSeleniumTests();
             testInstance.InitDriver();
@@ -35,389 +32,209 @@ namespace SomaliskDanskForening_Test.Selenium
             SeleniumBase.QuitSharedDriver();
         }
 
-        #region Kontakt Side CRUD Tests
+        // ---------- Hjaelpemetoder ----------
 
-        [TestMethod]
-        [TestCategory("CRUD")]
-        [TestCategory("Kontakt")]
-        public void Kontakt_AdminCRUD_CreateReadUpdateDelete()
+        private WebDriverWait NewWait()
         {
-            Console.WriteLine("\n========== KONTAKT SIDE TEST START ==========");
-            Console.WriteLine("Navigerer til Kontakt-siden...");
-            
-            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(WAIT_TIMEOUT_SEC));
-            Driver.Navigate().GoToUrl(BaseUrl + "/Kontakt/Kontakt.html");
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            // ===== CREATE =====
-            Console.WriteLine("\nTEST 1: OPRETTE ny kontakt");
-            string kontaktName = $"TestKontakt_{DateTime.Now.Ticks}";
-            string kontaktEmail = $"test{DateTime.Now.Ticks}@test.dk";
-            string kontaktPhone = "12345678";
-
-            // Find and click the "Add Contact" button
-            var addButton = Driver.FindElements(By.CssSelector(".kontakt-add-btn")).FirstOrDefault();
-            Assert.IsNotNull(addButton, "Admin skal kunne se 'Tilføj kontakt' knap");
-            addButton.Click();
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            var modal = wait.Until(d => 
-                d.FindElements(By.CssSelector(".modal, [role='dialog'], .kontakt-form")).FirstOrDefault());
-            Assert.IsNotNull(modal, "? Modal/form åbnede ikke");
-            Console.WriteLine(" Modal åbnet");
-
-            Console.WriteLine($" Udfylder form med navn: {kontaktName}");
-            Thread.Sleep(1000);
-            Type(By.CssSelector("input[name='name'], input[placeholder*='Navn']"), kontaktName);
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            Console.WriteLine($" Udfylder email: {kontaktEmail}");
-            Type(By.CssSelector("input[name='email'], input[placeholder*='Email']"), kontaktEmail);
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            Console.WriteLine($" Udfylder telefon: {kontaktPhone}");
-            Type(By.CssSelector("input[name='phone'], input[placeholder*='Telefon']"), kontaktPhone);
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            Console.WriteLine(" Sender form (Submit)");
-            var submitBtn = Driver.FindElements(By.CssSelector("button[type='submit'], .btn-save")).FirstOrDefault();
-            Assert.IsNotNull(submitBtn, "? Submit knap ikke fundet");
-            submitBtn.Click();
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            wait.Until(d => d.FindElements(By.CssSelector(".success, [role='alert'].success")).Count > 0 ||
-                           d.FindElements(By.CssSelector(".kontakt-grid")).Count > 0);
-            Console.WriteLine("Kontakt oprettet og success-besked vist");
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            // ===== READ =====
-            Console.WriteLine("\nTEST 2: LESE kontakt fra listen");
-            var contactItems = Driver.FindElements(By.CssSelector(".kontakt-item, .contact-card, [data-test='contact-item']"));
-            var createdContact = contactItems.FirstOrDefault(c => c.Text.Contains(kontaktName) || c.Text.Contains(kontaktEmail));
-            Assert.IsNotNull(createdContact, $"? Oprettet kontakt '{kontaktName}' ikke fundet i listen");
-            Console.WriteLine($"Kontakt fundet i listen: {kontaktName}");
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            // ===== UPDATE =====
-            Console.WriteLine("\nTEST 3: REDIGERE kontakt");
-            var editBtn = createdContact.FindElements(By.CssSelector(".edit-btn, .btn-edit, [data-action='edit']")).FirstOrDefault();
-            if (editBtn == null)
-            {
-                Console.WriteLine(" Ingen separat edit-knap, klikker på kontakt selv");
-                createdContact.Click();
-            }
-            else
-            {
-                Console.WriteLine(" Klikker på edit-knap");
-                editBtn.Click();
-            }
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            var editModal = wait.Until(d => 
-                d.FindElements(By.CssSelector(".modal, [role='dialog']")).FirstOrDefault());
-            Assert.IsNotNull(editModal, "? Edit-modal åbnede ikke");
-            Console.WriteLine(" Edit-modal åbnet");
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            string updatedEmail = $"updated{DateTime.Now.Ticks}@test.dk";
-            Console.WriteLine($" Ændrer email til: {updatedEmail}");
-            var emailInput = Driver.FindElements(By.CssSelector("input[name='email'], input[placeholder*='Email']")).FirstOrDefault();
-            Assert.IsNotNull(emailInput, "? Email-felt ikke fundet");
-            emailInput.Clear();
-            emailInput.SendKeys(updatedEmail);
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            Console.WriteLine(" Sender updated form");
-            var updateSubmit = Driver.FindElements(By.CssSelector("button[type='submit'], .btn-save")).FirstOrDefault();
-            updateSubmit?.Click();
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            wait.Until(d => d.FindElements(By.CssSelector(".success")).Count > 0 ||
-                           d.FindElements(By.CssSelector(".kontakt-grid")).Count > 0);
-            Console.WriteLine("Kontakt opdateret");
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            // ===== DELETE =====
-            Console.WriteLine("\nTEST 4: SLETTE kontakt");
-            contactItems = Driver.FindElements(By.CssSelector(".kontakt-item, .contact-card"));
-            var contactToDelete = contactItems.FirstOrDefault(c => c.Text.Contains(kontaktName));
-            Assert.IsNotNull(contactToDelete, "? Kontakt til sletning ikke fundet");
-
-            var deleteBtn = contactToDelete.FindElements(By.CssSelector(".delete-btn, .btn-delete, [data-action='delete']")).FirstOrDefault();
-            Assert.IsNotNull(deleteBtn, "? Slet-knap ikke fundet");
-            Console.WriteLine(" Klikker på slet-knap");
-            deleteBtn.Click();
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            // Håndtér bekræftelse hvis den findes
-            var confirmBtns = Driver.FindElements(By.CssSelector("button.confirm, .btn-confirm, [data-action='confirm']"));
-            if (confirmBtns.Count > 0)
-            {
-                Console.WriteLine(" Bekræftelses-dialog fundet, bekræfter sletning");
-                confirmBtns[0].Click();
-                Thread.Sleep(SLOW_PAUSE_MS);
-            }
-
-            wait.Until(d => d.FindElements(By.CssSelector(".success")).Count > 0 ||
-                           d.FindElements(By.CssSelector(".kontakt-grid")).Count > 0);
-            Console.WriteLine("Kontakt slettet");
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            Console.WriteLine("\n========== KONTAKT SIDE TEST FÆRDIG ==========\n");
+            var w = new WebDriverWait(Driver, TimeSpan.FromSeconds(WAIT_TIMEOUT_SEC));
+            // Vue gen-renderer lister, sa elementer kan blive foraeldede midt i et tjek
+            w.IgnoreExceptionTypes(typeof(StaleElementReferenceException));
+            return w;
         }
 
-        #endregion
+        // Saetter vaerdien paa et input/textarea og udloeser Vue's v-model (input + change)
+        private void SetVueValue(string id, string value)
+        {
+            NewWait().Until(d => d.FindElements(By.Id(id)).Any(e => e.Displayed));
+            ((IJavaScriptExecutor)Driver).ExecuteScript(
+                "var el = document.getElementById(arguments[0]);" +
+                "if (!el) { return false; }" +
+                "var proto = el.tagName === 'TEXTAREA' ? window.HTMLTextAreaElement.prototype : window.HTMLInputElement.prototype;" +
+                "var setter = Object.getOwnPropertyDescriptor(proto, 'value').set;" +
+                "setter.call(el, arguments[1]);" +
+                "el.dispatchEvent(new Event('input', { bubbles: true }));" +
+                "el.dispatchEvent(new Event('change', { bubbles: true }));" +
+                "return true;", id, value);
+            Thread.Sleep(SLOW_PAUSE_MS);
+        }
 
-        #region Event Side CRUD Tests
+        private void ClickCss(string css)
+        {
+            var el = NewWait().Until(d => d.FindElements(By.CssSelector(css)).FirstOrDefault(x => x.Displayed));
+            el.Click();
+            Thread.Sleep(SLOW_PAUSE_MS);
+        }
+
+        // Accepterer en browser-confirm()-dialog hvis en er aaben
+        private void AcceptConfirmIfPresent()
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                try { Driver.SwitchTo().Alert().Accept(); return; }
+                catch (NoAlertPresentException) { Thread.Sleep(250); }
+            }
+        }
+
+        private IWebElement? FindEventCard(string titleText) =>
+            Driver.FindElements(By.CssSelector(".event-card")).FirstOrDefault(c => c.Text.Contains(titleText));
+
+        // ---------- Event: fuld CRUD via Add/Edit-sider ----------
 
         [TestMethod]
         [TestCategory("CRUD")]
         [TestCategory("Event")]
         public void Event_AdminCRUD_CreateReadUpdateDelete()
         {
-            Console.WriteLine("\n========== EVENT SIDE TEST START ==========");
-            Console.WriteLine("Navigerer til Event-siden...");
-            
-            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(WAIT_TIMEOUT_SEC));
+            Console.WriteLine("\n========== EVENT CRUD START ==========");
+            var wait = NewWait();
+            string title = $"TestEvent_{DateTime.Now.Ticks}";
+            string desc = "Automatisk oprettet test-event";
+            string date = DateTime.Now.AddDays(7).ToString("yyyy-MM-dd");
+
+            // CREATE
+            Console.WriteLine("CREATE: opretter nyt event");
             Driver.Navigate().GoToUrl(BaseUrl + "/Event/Event.html");
-            Thread.Sleep(SLOW_PAUSE_MS);
+            ClickCss(".hero-cta, .empty-cta");                 // -> Add.html
+            wait.Until(d => d.Url.Contains("Add.html"));
+            SetVueValue("title", title);
+            SetVueValue("date", date);
+            SetVueValue("startTime", "10");
+            SetVueValue("duration", "2");
+            SetVueValue("description", desc);
+            ClickCss(".btn-primary");                          // addItem -> redirect til Event.html
+            wait.Until(d => d.Url.Contains("Event.html") && !d.Url.Contains("Add.html"));
 
-            // ===== CREATE =====
-            Console.WriteLine("\nTEST 1: OPRETTE nyt event");
-            string eventTitle = $"TestEvent_{DateTime.Now.Ticks}";
-            string eventDesc = "Test event for automation";
-            string eventDate = DateTime.Now.AddDays(7).ToString("yyyy-MM-dd");
+            // READ
+            Console.WriteLine("READ: finder eventet i listen");
+            wait.Until(d => d.FindElements(By.CssSelector(".event-card")).Any(c => c.Text.Contains(title)));
+            Assert.IsNotNull(FindEventCard(title), "Oprettet event blev ikke fundet i listen");
 
-            var addBtn = wait.Until(d => 
-                d.FindElements(By.CssSelector(".hero-cta, .empty-cta, .btn-add, [data-test='add-event']")).FirstOrDefault());
-            Assert.IsNotNull(addBtn, "? 'Tilføj event' knap ikke fundet");
-            
-            Console.WriteLine(" Klikker på 'Tilføj event' knap");
-            addBtn.Click();
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            var modal = wait.Until(d => 
-                d.FindElements(By.CssSelector(".modal, [role='dialog']")).FirstOrDefault());
-            Assert.IsNotNull(modal, "? Modal åbnede ikke");
-            Console.WriteLine(" Modal åbnet");
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            Console.WriteLine($" Udfylder titel: {eventTitle}");
-            Type(By.CssSelector("input[name='title'], input[placeholder*='Titel'], input[placeholder*='Navn']"), eventTitle);
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            Console.WriteLine($" Udfylder beskrivelse: {eventDesc}");
-            Type(By.CssSelector("textarea[name='description'], textarea[placeholder*='Beskrivelse']"), eventDesc);
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            Console.WriteLine($" Udfylder dato: {eventDate}");
-            Type(By.CssSelector("input[name='date'], input[type='date']"), eventDate);
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            Console.WriteLine(" Sender form");
-            var submitBtn = Driver.FindElements(By.CssSelector("button[type='submit'], .btn-save")).FirstOrDefault();
-            Assert.IsNotNull(submitBtn, "? Submit knap ikke fundet");
-            submitBtn.Click();
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            wait.Until(d => d.FindElements(By.CssSelector(".success")).Count > 0 ||
-                           d.FindElements(By.CssSelector(".events-grid")).Count > 0);
-            Console.WriteLine("Event oprettet");
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            // ===== READ =====
-            Console.WriteLine("\nTEST 2: LESE event fra listen");
-            var eventItems = Driver.FindElements(By.CssSelector(".event-card, .event-item, [data-test='event-item']"));
-            var createdEvent = eventItems.FirstOrDefault(e => e.Text.Contains(eventTitle));
-            Assert.IsNotNull(createdEvent, $"? Event '{eventTitle}' ikke fundet");
-            Console.WriteLine($"Event fundet i listen: {eventTitle}");
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            // ===== UPDATE =====
-            Console.WriteLine("\nTEST 3: REDIGERE event");
-            var editBtn = createdEvent.FindElements(By.CssSelector(".edit-btn, .btn-edit, [data-action='edit']")).FirstOrDefault();
-            if (editBtn == null)
-            {
-                Console.WriteLine(" Klikker på event selv");
-                createdEvent.Click();
-            }
-            else
-            {
-                Console.WriteLine(" Klikker på edit-knap");
-                editBtn.Click();
-            }
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            var editModal = wait.Until(d => 
-                d.FindElements(By.CssSelector(".modal, [role='dialog']")).FirstOrDefault());
-            Assert.IsNotNull(editModal, "? Edit-modal åbnede ikke");
-            Console.WriteLine(" Edit-modal åbnet");
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            string updatedDesc = $"Updated event - {DateTime.Now.Ticks}";
-            Console.WriteLine($" Ændrer beskrivelse til: {updatedDesc}");
-            var descInput = Driver.FindElements(By.CssSelector("textarea[name='description'], textarea[placeholder*='Beskrivelse']")).FirstOrDefault();
-            Assert.IsNotNull(descInput, "? Beskrivelse-felt ikke fundet");
-            descInput.Clear();
-            descInput.SendKeys(updatedDesc);
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            Console.WriteLine(" Sender updated form");
-            var updateSubmit = Driver.FindElements(By.CssSelector("button[type='submit'], .btn-save")).FirstOrDefault();
-            updateSubmit?.Click();
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            wait.Until(d => d.FindElements(By.CssSelector(".success")).Count > 0 ||
-                           d.FindElements(By.CssSelector(".events-grid")).Count > 0);
+            // UPDATE
+            Console.WriteLine("UPDATE: redigerer beskrivelsen");
+            string updatedDesc = $"Opdateret beskrivelse {DateTime.Now.Ticks}";
+            FindEventCard(title)!.FindElement(By.CssSelector(".edit-btn")).Click();   // -> Edit.html?id=
+            wait.Until(d => d.Url.Contains("Edit.html"));
+            SetVueValue("description", updatedDesc);
+            ClickCss(".btn-primary");                          // updateItem -> redirect til Event.html
+            wait.Until(d => d.Url.Contains("Event.html") && !d.Url.Contains("Edit.html"));
+            wait.Until(d => d.FindElements(By.CssSelector(".event-card")).Any(c => c.Text.Contains(updatedDesc)));
             Console.WriteLine("Event opdateret");
-            Thread.Sleep(SLOW_PAUSE_MS);
 
-            // ===== DELETE =====
-            Console.WriteLine("\nTEST 4: SLETTE event");
-            eventItems = Driver.FindElements(By.CssSelector(".event-card, .event-item"));
-            var eventToDelete = eventItems.FirstOrDefault(e => e.Text.Contains(eventTitle));
-            Assert.IsNotNull(eventToDelete, "? Event til sletning ikke fundet");
-
-            var deleteBtn = eventToDelete.FindElements(By.CssSelector(".delete-btn, .btn-delete, [data-action='delete']")).FirstOrDefault();
-            Assert.IsNotNull(deleteBtn, "? Slet-knap ikke fundet");
-            Console.WriteLine(" Klikker på slet-knap");
-            deleteBtn.Click();
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            var confirmBtns = Driver.FindElements(By.CssSelector("button.confirm, .btn-confirm"));
-            if (confirmBtns.Count > 0)
-            {
-                Console.WriteLine(" Bekræfter sletning");
-                confirmBtns[0].Click();
-                Thread.Sleep(SLOW_PAUSE_MS);
-            }
-
-            wait.Until(d => d.FindElements(By.CssSelector(".success")).Count > 0 ||
-                           d.FindElements(By.CssSelector(".events-grid")).Count > 0);
+            // DELETE
+            Console.WriteLine("DELETE: sletter eventet");
+            FindEventCard(title)!.FindElement(By.CssSelector(".delete-btn")).Click();
+            AcceptConfirmIfPresent();                          // bekraeft browser-dialog
+            wait.Until(d => !d.FindElements(By.CssSelector(".event-card")).Any(c => c.Text.Contains(title)));
             Console.WriteLine("Event slettet");
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            Console.WriteLine("\n========== EVENT SIDE TEST FÆRDIG ==========\n");
+            Console.WriteLine("========== EVENT CRUD FAERDIG ==========\n");
         }
 
-        #endregion
-
-        #region Donation Side Tests
+        // ---------- Kontakt: vis + rediger (siden har en post, ingen sletning i UI) ----------
 
         [TestMethod]
-        [TestCategory("CRUD")]
+        [TestCategory("Kontakt")]
+        public void Kontakt_Admin_ViewAndUpdate()
+        {
+            Console.WriteLine("\n========== KONTAKT START ==========");
+            var wait = NewWait();
+            Driver.Navigate().GoToUrl(BaseUrl + "/Kontakt/Kontakt.html");
+
+            // Opret oplysninger hvis siden er tom (admin ser 'Tilfoej'-knap)
+            if (Driver.FindElements(By.CssSelector(".kontakt-add-btn")).Any(e => e.Displayed))
+            {
+                Console.WriteLine("Ingen kontakt endnu - opretter");
+                ClickCss(".kontakt-add-btn");                  // -> Add.html
+                wait.Until(d => d.Url.Contains("Add.html"));
+                SetVueValue("address", "Rosenvej 5, 4300 Holbaek");
+                SetVueValue("phone", "+45 59 43 12 34");
+                SetVueValue("email", "kontakt@somaliskdanskforening.dk");
+                ClickCss(".btn-primary");
+                wait.Until(d => d.Url.Contains("Kontakt.html") && !d.Url.Contains("Add.html"));
+            }
+
+            // READ
+            Console.WriteLine("READ: viser kontaktoplysninger");
+            var grid = wait.Until(d => d.FindElements(By.CssSelector(".kontakt-grid")).FirstOrDefault(e => e.Displayed));
+            Assert.IsNotNull(grid, "Kontakt-oplysninger blev ikke vist");
+            Assert.IsTrue(grid.Text.Trim().Length > 0, "Kontakt-kort var tomt");
+
+            // UPDATE: rediger telefonnummer
+            Console.WriteLine("UPDATE: aendrer telefonnummer");
+            string newPhone = "70" + (DateTime.Now.Ticks % 1000000).ToString("D6");
+            ClickCss(".kontakt-edit-btn");                     // -> Edit.html?id=
+            wait.Until(d => d.Url.Contains("Edit.html"));
+            SetVueValue("address", "Rosenvej 5, 4300 Holbaek");
+            SetVueValue("email", "kontakt@somaliskdanskforening.dk");
+            SetVueValue("phone", newPhone);
+            ClickCss(".btn-primary");                          // updateItem -> redirect til Kontakt.html
+            wait.Until(d => d.Url.Contains("Kontakt.html") && !d.Url.Contains("Edit.html"));
+
+            Driver.Navigate().GoToUrl(BaseUrl + "/Kontakt/Kontakt.html");
+            wait.Until(d => d.FindElements(By.CssSelector(".kontakt-grid")).Any(e => e.Displayed));
+            wait.Until(d => d.PageSource.Contains(newPhone));
+            Console.WriteLine("Telefonnummer opdateret og vist");
+            Console.WriteLine("========== KONTAKT FAERDIG ==========\n");
+        }
+
+        // ---------- Donation: vis + rediger indhold ----------
+
+        [TestMethod]
         [TestCategory("Donation")]
         public void Donation_AdminUpdate()
         {
-            Console.WriteLine("\n========== DONATION SIDE TEST START ==========");
-            Console.WriteLine("Navigerer til Donation-siden...");
-            
-            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(WAIT_TIMEOUT_SEC));
+            Console.WriteLine("\n========== DONATION START ==========");
+            var wait = NewWait();
             Driver.Navigate().GoToUrl(BaseUrl + "/Donation/Donation.html");
-            Thread.Sleep(SLOW_PAUSE_MS);
 
-            // Donation siden er primært en info-side, test edit hvis disponibelt
-            Console.WriteLine("\nTEST 1: VERIFICER at siden indlæser");
-            var heroBadge = wait.Until(d => 
-                d.FindElements(By.CssSelector(".hero-badge")).FirstOrDefault());
-            Assert.IsNotNull(heroBadge, "? Hero badge ikke fundet");
-            Assert.AreEqual("Donation", heroBadge.Text.Trim(), "? Wrong badge text");
-            Console.WriteLine("Donation side indlæst korrekt");
-            Thread.Sleep(SLOW_PAUSE_MS);
+            // Badge-teksten (CSS goer den til STORE bogstaver -> sammenlign versal-uafhaengigt)
+            var badge = wait.Until(d => d.FindElements(By.CssSelector(".hero-badge")).FirstOrDefault(e => e.Displayed));
+            Assert.IsNotNull(badge, "Hero-badge blev ikke fundet");
+            Assert.AreEqual("donation", badge.Text.Trim().ToLowerInvariant(), "Forkert badge-tekst");
+            Console.WriteLine("Donation-siden indlaest");
 
-            // Test edit hvis mulig
-            Console.WriteLine("\nTEST 2: REDIGERE donation indhold (hvis muligt)");
-            var editBtn = Driver.FindElements(By.CssSelector(".hero-edit-btn, .mobilepay-edit-btn, [data-action='edit']")).FirstOrDefault();
-            if (editBtn != null)
-            {
-                Console.WriteLine(" Edit-knap fundet, klikker");
-                editBtn.Click();
-                Thread.Sleep(SLOW_PAUSE_MS);
+            // UPDATE: rediger donationsteksten
+            Console.WriteLine("UPDATE: aendrer donationsindhold");
+            string marker = $"Opdateret {DateTime.Now.Ticks}";
+            string newText = $"Din stoette goer en forskel. {marker}";
+            ClickCss(".hero-edit-btn");                        // -> Edit.html?id=
+            wait.Until(d => d.Url.Contains("Edit.html"));
+            SetVueValue("text", newText);
+            ClickCss(".btn-primary");                          // updateItem -> redirect til Donation.html
+            wait.Until(d => d.Url.Contains("Donation.html") && !d.Url.Contains("Edit.html"));
 
-                var editForm = wait.Until(d => 
-                    d.FindElements(By.CssSelector(".modal, [role='dialog']")).FirstOrDefault());
-                
-                if (editForm != null)
-                {
-                    Console.WriteLine(" Edit-form åbnet");
-                    var inputs = Driver.FindElements(By.CssSelector("input[type='text'], textarea"));
-                    if (inputs.Count > 0)
-                    {
-                        string updatedValue = $"Updated_{DateTime.Now.Ticks}";
-                        inputs[0].Clear();
-                        inputs[0].SendKeys(updatedValue);
-                        Thread.Sleep(SLOW_PAUSE_MS);
-
-                        var submitBtn = Driver.FindElements(By.CssSelector("button[type='submit'], .btn-save")).FirstOrDefault();
-                        if (submitBtn != null)
-                        {
-                            submitBtn.Click();
-                            wait.Until(d => d.FindElements(By.CssSelector(".success")).Count > 0);
-                            Console.WriteLine("Donation indhold opdateret");
-                        }
-                    }
-                }
-                else
-                {
-                    Console.WriteLine(" Edit-form åbnede ikke, men edit-knap findes");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Ingen edit-knap på Donation siden (forventet for info-side)");
-            }
-            Thread.Sleep(SLOW_PAUSE_MS);
-
-            Console.WriteLine("\n========== DONATION SIDE TEST FÆRDIG ==========\n");
+            Driver.Navigate().GoToUrl(BaseUrl + "/Donation/Donation.html");
+            wait.Until(d => d.PageSource.Contains(marker));
+            Console.WriteLine("Donationsindhold opdateret og vist");
+            Console.WriteLine("========== DONATION FAERDIG ==========\n");
         }
 
-        #endregion
-
-        #region Navigation Tests (hvis relevant)
+        // ---------- Navigation ----------
 
         [TestMethod]
         [TestCategory("Navigation")]
         public void Navigation_TestButtonNavigation()
         {
-            Console.WriteLine("\n========== NAVIGATION TEST START ==========");
-            
-            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(WAIT_TIMEOUT_SEC));
-            
-            // Test navigation fra Kontakt
-            Console.WriteLine("\nNavigerer til Kontakt-siden...");
+            Console.WriteLine("\n========== NAVIGATION START ==========");
+            var wait = NewWait();
             Driver.Navigate().GoToUrl(BaseUrl + "/Kontakt/Kontakt.html");
             Thread.Sleep(SLOW_PAUSE_MS);
 
-            // Hvis der er navigations-links/knapper, test dem
-            var navLinks = Driver.FindElements(By.CssSelector("a[href], button[onclick*='navigate'], [data-nav]"));
-            Console.WriteLine($" Fandt {navLinks.Count} mulige navigations-elementer");
-            
-            if (navLinks.Count > 0)
+            var navLinks = Driver.FindElements(By.CssSelector("a[href]"));
+            Console.WriteLine($"Fandt {navLinks.Count} links");
+
+            var firstNavLink = navLinks.FirstOrDefault(l =>
+                !(l.GetAttribute("href")?.Contains("Kontakt") ?? true) &&
+                l.Displayed);
+
+            if (firstNavLink != null)
             {
-                var firstNavLink = navLinks.FirstOrDefault(l => 
-                    !l.GetAttribute("href")?.Contains("Kontakt") ?? true);
-                
-                if (firstNavLink != null)
-                {
-                    string linkText = firstNavLink.Text;
-                    Console.WriteLine($" Klikker på link: {linkText}");
-                    firstNavLink.Click();
-                    Thread.Sleep(SLOW_PAUSE_MS);
-
-                    string currentUrl = Driver.Url;
-                    Console.WriteLine($" Navigeret til: {currentUrl}");
-                    Assert.IsFalse(currentUrl.Contains("Kontakt"), "? Skulle have navigeret væk fra Kontakt");
-
-                    Console.WriteLine(" Går tilbage");
-                    Driver.Navigate().Back();
-                    Thread.Sleep(SLOW_PAUSE_MS);
-                    Console.WriteLine("Navigation og tilbage-funktion virker");
-                }
+                firstNavLink.Click();
+                wait.Until(d => !d.Url.Contains("Kontakt"));
+                Assert.IsFalse(Driver.Url.Contains("Kontakt"), "Skulle have navigeret vaek fra Kontakt");
+                Driver.Navigate().Back();
+                Console.WriteLine("Navigation og tilbage-funktion virker");
             }
-
-            Console.WriteLine("\n========== NAVIGATION TEST FÆRDIG ==========\n");
+            Console.WriteLine("========== NAVIGATION FAERDIG ==========\n");
         }
-
-        #endregion
     }
 }

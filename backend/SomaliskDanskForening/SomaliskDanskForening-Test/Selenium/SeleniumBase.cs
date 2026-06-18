@@ -89,8 +89,9 @@ namespace SomaliskDanskForening_Test.Selenium
 
         protected void LoginAsAdmin()
         {
-            // Login kun hvis det ikke allerede er gjort
-            if (_isLoggedIn)
+            // Spring kun over hvis vi allerede er logget ind OG ikke står på login-siden.
+            // (Ellers springer en dedikeret login-test selve login'et over pga. den delte static-tilstand.)
+            if (_isLoggedIn && !Driver.Url.Contains("/Login"))
             {
                 return;
             }
