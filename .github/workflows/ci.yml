@@ -16,7 +16,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: '9.0.x'
 
     - name: Restore
       run: dotnet restore
@@ -27,5 +27,7 @@ jobs:
       working-directory: ./backend/SomaliskDanskForening
 
     - name: Test
-      run: dotnet test --no-build --configuration Release
+      # Selenium er E2E-tests der kræver en browser og et kørende website
+      # (http://127.0.0.1:5500). De ekskluderes i CI og køres lokalt.
+      run: dotnet test --no-build --configuration Release --filter "FullyQualifiedName!~Selenium"
       working-directory: ./backend/SomaliskDanskForening
