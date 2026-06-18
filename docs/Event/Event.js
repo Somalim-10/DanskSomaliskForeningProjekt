@@ -82,7 +82,8 @@ Vue.createApp({
     },
 
     getImage(eventId) {
-      return this.eventImages[eventId] || null;
+      // Egne uploads (localStorage) har forrang; ellers et pænt standardfoto fra nettet
+      return this.eventImages[eventId] || ('https://picsum.photos/seed/sdf-event-' + eventId + '/800/450');
     },
 
     editEvent(id) {
